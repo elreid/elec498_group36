@@ -1,0 +1,13 @@
+All:
+- figure out how threads are initialized, how many etc.
+- sort out processes into threads
+
+Adam:
+- check clock thing
+- https://www.reddit.com/r/CUDA/comments/10i1hvq/timing_thread_execution_on_cuda/
+
+Beth:
+
+Camila:
+
+Vanya:
