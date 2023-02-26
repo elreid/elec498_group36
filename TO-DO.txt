@@ -1,10 +1,20 @@
 All:
-- figure out how threads are initialized, how many etc.
-- sort out processes into threads
+- process info into threads
+    - how do we divide processes into threads?
+    - how do we check when these threads are finished on these processes?
+
+l buffer / # partitions 
+
+pready to check if a partition is DONE
+-send address + size pciwrite
+- 1 is ptr to address the other 2 are a pointer to the work request ( make up address) and address of the nic on PCI bus (a 64 bus)
+-pcie write from gpu = ??? 
 
 Adam:
 - check clock thing
 - https://www.reddit.com/r/CUDA/comments/10i1hvq/timing_thread_execution_on_cuda/
+- initialize array for time. 
+
 
 Beth:
 
