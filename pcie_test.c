@@ -40,6 +40,9 @@ int main()
     }
     pclose(fp);
 
+
+    printf("%s\n", line);
+
     return 0;
 
     // // Map the PCIe device memory to user space
