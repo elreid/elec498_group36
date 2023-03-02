@@ -4,8 +4,11 @@
 #include <math.h>
 #include <assert.h>
 #include <cuda.h>
+#include <time.h>
+#include <sys/time.h>
 
 #define N 16
+#define USECPSEC 1000000ULL
 
 __global__ void MultiBlock(int numThreads){
 //find thread index so we can interate through 
@@ -22,6 +25,16 @@ for (int j = 0; numBlocks > j; j++){
     }
 }
 }
+
+//TO-DO ADAM: needs to be made into global, cpu, etc.
+//TIMING KERNEL EXECUTION WITH CPU TIMERS:
+unsigned long long myCPUTimer(unsigned long long start=0){
+
+  timeval tv;
+  gettimeofday(&tv, 0);
+  return ((tv.tv_sec*USECPSEC)+tv.tv_usec)-start;
+} //returns time in microseconds 
+
 
 int main(){
     //allocate host mem
