@@ -45,42 +45,42 @@ int main()
 
     return 0;
 
-    // // Map the PCIe device memory to user space
-    // unsigned long bar_size = 0;
-    // char sysfs_path[256];
-    // sprintf(sysfs_path, "/sys/bus/pci/devices/%04x:%02x:%02x.%d/resource%d",
-    //         PCIE_DEVICE_VENDOR_ID, bus_id, device_id, function_id, PCIE_DEVICE_BAR);
-    // FILE *sysfs_file = fopen(sysfs_path, "r");
-    // if (sysfs_file == NULL)
-    // {
-    //     perror("fopen");
-    //     exit(EXIT_FAILURE);
-    // }
-    // fscanf(sysfs_file, "%lx", &pcie_device_address);
-    // fclose(sysfs_file);
+    // Map the PCIe device memory to user space
+    unsigned long bar_size = 0;
+    char sysfs_path[256];
+    sprintf(sysfs_path, "/sys/bus/pci/devices/%04x:%02x:%02x.%d/resource%d",
+            PCIE_DEVICE_VENDOR_ID, bus_id, device_id, function_id, PCIE_DEVICE_BAR);
+    FILE *sysfs_file = fopen(sysfs_path, "r");
+    if (sysfs_file == NULL)
+    {
+        perror("fopen");
+        exit(EXIT_FAILURE);
+    }
+    fscanf(sysfs_file, "%lx", &pcie_device_address);
+    fclose(sysfs_file);
 
-    // sprintf(sysfs_path, "/sys/bus/pci/devices/%04x:%02x:%02x.%d/size%d",
-    //         PCIE_DEVICE_VENDOR_ID, bus_id, device_id, function_id, PCIE_DEVICE_BAR);
-    // sysfs_file = fopen(sysfs_path, "r");
-    // if (sysfs_file == NULL)
-    // {
-    //     perror("fopen");
-    //     exit(EXIT_FAILURE);
-    // }
-    // fscanf(sysfs_file, "%lx", &bar_size);
-    // fclose(sysfs_file);
+    sprintf(sysfs_path, "/sys/bus/pci/devices/%04x:%02x:%02x.%d/size%d",
+            PCIE_DEVICE_VENDOR_ID, bus_id, device_id, function_id, PCIE_DEVICE_BAR);
+    sysfs_file = fopen(sysfs_path, "r");
+    if (sysfs_file == NULL)
+    {
+        perror("fopen");
+        exit(EXIT_FAILURE);
+    }
+    fscanf(sysfs_file, "%lx", &bar_size);
+    fclose(sysfs_file);
 
-    // void *pcie_device_ptr = mmap(NULL, bar_size, PROT_WRITE, MAP_SHARED, fd, pcie_device_address);
-    // if (pcie_device_ptr == MAP_FAILED)
-    // {
-    //     perror("mmap");
-    //     exit(EXIT_FAILURE);
-    // }
+    void *pcie_device_ptr = mmap(NULL, bar_size, PROT_WRITE, MAP_SHARED, fd, pcie_device_address);
+    if (pcie_device_ptr == MAP_FAILED)
+    {
+        perror("mmap");
+        exit(EXIT_FAILURE);
+    }
 
-    // // Write to the PCIe device memory
-    // unsigned int data = 0x12345678;
-    // volatile unsigned int *pcie_reg = (volatile unsigned int *)(pcie_device_ptr + 0x10);
-    // *pcie_reg = data;
+    // Write to the PCIe device memory
+    unsigned int data = 0x12345678;
+    volatile unsigned int *pcie_reg = (volatile unsigned int *)(pcie_device_ptr + 0x10);
+    *pcie_reg = data;
 
     // Un
     // This is a little tester comment
