@@ -9,12 +9,12 @@
 
 int main()
 {
-    int fd = open("/dev/mem", O_RDWR | O_SYNC);
-    if (fd < 0)
-    {
-        perror("open");
-        exit(EXIT_FAILURE);
-    }
+    // int fd = open("/dev/mem", O_RDWR | O_SYNC);
+    // if (fd < 0)
+    // {
+    //     perror("open");
+    //     exit(EXIT_FAILURE);
+    // }
 
     // Find the PCIe device
     int bus_id = 0x01;
@@ -22,25 +22,25 @@ int main()
     int function_id = 0x0;
     unsigned long pcie_device_address = 0;
 
-    printf("Hello turtle");
+    // printf("Hello turtle");
 
-    // char line[256];
-    // FILE *fp = popen("lspci", "r");
-    // while (fgets(line, sizeof(line), fp))
-    // {
-    //     if (sscanf(line, "%02x:%02x.%d", &bus_id, &device_id, &function_id) == 3)
-    //     {
-    //         unsigned int vendor_id, device;
-    //         sscanf(line + 8, "%4hx:%4hx", &vendor_id, &device);
-    //         if (vendor_id == PCIE_DEVICE_VENDOR_ID && device == PCIE_DEVICE_DEVICE_ID)
-    //         {
-    //             break;
-    //         }
-    //     }
-    // }
-    // pclose(fp);
+    char line[256];
+    FILE *fp = popen("lspci", "r");
+    while (fgets(line, sizeof(line), fp))
+    {
+        if (sscanf(line, "%02x:%02x.%d", &bus_id, &device_id, &function_id) == 3)
+        {
+            unsigned int vendor_id, device;
+            sscanf(line + 8, "%4hx:%4hx", &vendor_id, &device);
+            if (vendor_id == PCIE_DEVICE_VENDOR_ID && device == PCIE_DEVICE_DEVICE_ID)
+            {
+                break;
+            }
+        }
+    }
+    pclose(fp);
 
-    // return 0;
+    return 0;
 
     // // Map the PCIe device memory to user space
     // unsigned long bar_size = 0;
