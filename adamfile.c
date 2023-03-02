@@ -50,7 +50,7 @@ newNode->next = *headRef;
 
 
 /*
-for(int i = 0; i < NUMPARTITIONS; i++){
+for(int i = 0; i < NUMPARTITIONS*3; i++){
     iterate through each partition to add required number of nodes using functions above. 
  (insert nodes to list with specified values)
 
