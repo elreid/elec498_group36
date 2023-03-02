@@ -34,6 +34,8 @@ int main()
     }
     pclose(fp);
 
+    return 0;
+
     // Map the PCIe device memory to user space
     unsigned long bar_size = 0;
     char sysfs_path[256];
@@ -69,3 +71,5 @@ int main()
     *pcie_reg = data;
 
     // Un
+
+}
