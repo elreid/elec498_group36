@@ -27,37 +27,51 @@ unsigned long long myCPUTimer(unsigned long long start=0){
 struct node {
 int* buffer;
 int size;
-int op; 
+int partitions; 
 struct node* next;
 };
 
-// length of LinkedList testing function
-int LengthLinkedList(struct node *head)
-{
-    struct node *current = head;
-    int count = 0;
-    while (current != NULL)
-    {
-        count++;
-        current = current->next;
-    }
-    return count;
+//length of LinkedList testing function
+int LengthLinkedList(struct node* head) {
+struct node* current = head;
+int count = 0;
+while (current != NULL) {
+count++;
+current = current->next;
+}
+return count;
 }
 
-// add Node function
-void AddNode(struct node **headRef, int data)
-{
-    struct node *newNode = malloc(sizeof(struct node));
-    newNode->data = data;
-    newNode->next = *headRef;
-    *headRef = newNode;
+//add Node function
+void AddNode(struct node** headRef, int data) {
+struct node* newNode = malloc(sizeof(struct node));
+newNode->data = data;
+newNode->next = *headRef; 
+*headRef = newNode;
 }
 
 node* populate_list(int partitions){
+	node* head = NULL; 
+	node* prev = NULL; 
+	
+	for(int i = 0; i < NUMNODES; i+=4){
 	node* curr = (node*)malloc(sizeof(node));
-	curr->buffer = 0x0000000000000000;
+	curr->buffer = 0x0000000000000000 + i;
 	curr->size = 256;
 	curr->partitions = 16;
+	curr->next = NULL; 
+	
+	if (prev != NULL){
+		prev->next = curr;}
+	else{
+		head = curr;}
+	
+	prev = curr; 
+	if (i==NUMNODES-1){
+		prev->next = head;}
+	}
+	return head; 
+	
 }
 
 void populateArray(struct node *head, int NUMNODES){
@@ -77,7 +91,7 @@ void populateArray(struct node *head, int NUMNODES){
 int main(int argc, char** argv) {
     int process_Rank, size_Of_Cluster;
     int buf[100], provided;
-    // MPI_Init(&argc, &argv);
+   // MPI_Init(&argc, &argv);
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
     MPI_Comm_size(MPI_COMM_WORLD, &size_Of_Cluster);
     MPI_Comm_rank(MPI_COMM_WORLD, &process_Rank);
@@ -85,25 +99,24 @@ int main(int argc, char** argv) {
     printf("Hello World from process %d of %d\n", process_Rank, size_Of_Cluster);
     printf("%d\n", provided);
 
-    if (process_Rank == 0)
-    {
+
+   if ( process_Rank == 0 ) {
         /* Rank 0 sends an integer to each of the other process ranks */
         int i;
         int value = 0;
-        for (i = 1; i < size_Of_Cluster; i++)
-        {
+        for (i = 1; i < size_Of_Cluster; i++) {
             value = value + i;
             MPI_Send(&value, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
-            // printf("%d\n", value);
+	   // printf("%d\n", value);
         }
     }
-    else
-    {
+    else {
         /* All other process ranks receive one number from Rank 0 */
         int value;
         MPI_Status status;
         MPI_Recv(&value, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
-        printf("Rank %d received value %d\n", process_Rank, value);
+        printf("Rank %d received value %d\n",process_Rank, value);
+	
     }
 
     MPI_Finalize();
