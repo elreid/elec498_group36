@@ -20,23 +20,13 @@ unsigned long long myCPUTimer(unsigned long long start = 0)
     return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
 } // returns time in microseconds
 
-// LinkedList Construction
-struct node
-{
-    int data;
-    struct node *next;
-};
 
-struct bogus_mpi_request{
-    void *real_request;
-    void *data;
-    int partitions;
-}
-
-struct node
-{
-    struct bogus_mpi_request *request;
-    struct node *next;
+//LinkedList Construction
+struct node {
+int* buffer;
+int size;
+int op; 
+struct node* next;
 };
 
 // length of LinkedList testing function
@@ -60,6 +50,12 @@ void AddNode(struct node **headRef, int data)
     newNode->next = *headRef;
     *headRef = newNode;
 }
+
+node* populate_list(int partitions){
+	node* curr = (node*)malloc(sizeof(node));
+	curr->
+}
+
 
 /*
 for(int i = 0; i < NUMPARTITIONS*3; i++){
