@@ -10,7 +10,7 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-
+#define NUMNODES 5
 
 
 //TO-DO ADAM: needs to be made into global, cpu, etc.
@@ -59,15 +59,19 @@ node* populate_list(int partitions){
 	curr->partitions = 16;
 }
 
+void populateArray(struct node *head, int NUMNODES){
 
-/*
-for(int i = 0; i < NUMPARTITIONS*3; i++){
-    iterate through each partition to add required number of nodes using functions above. 
- (insert nodes to list with specified values)
+    struct node *current = head;
 
-
+    for(int i = 0; i < NUMNODES; i++){
+        tempArray[i] = current->buffer;
+        tempArray[i+1] = current-> size;
+        tempArray[i+2] = current -> partitions;
+        current = current->next;
+    }
 }
-*/
+
+
 
 int main(int argc, char** argv) {
     int process_Rank, size_Of_Cluster;

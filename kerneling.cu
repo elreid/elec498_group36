@@ -10,6 +10,10 @@
 #define N 16
 #define USECPSEC 1000000ULL
 
+
+
+
+
 __global__ void MultiBlock(int numThreads){
 //find thread index so we can interate through 
 int index = blockIdx.x * blockDim.x + threadIdx.x;
