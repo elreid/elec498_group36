@@ -70,10 +70,6 @@ node *populate_list()
         {
             prev->next = curr;
         }
-        if (curr->next == NULL)
-        {
-            return head;
-        }
         else
         {
             head = curr;
@@ -85,6 +81,7 @@ node *populate_list()
             prev->next = head;
         }
     }
+    return head;
 }
 
 void populateArray(struct node *head, int NUMNODES)
