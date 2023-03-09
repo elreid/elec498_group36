@@ -53,14 +53,14 @@ void AddNode(struct node **headRef, int data)
     *headRef = newNode;
 }
 
-node *populate_list()
+struct node *populate_list()
 {
-    node *head = NULL;
-    node *prev = NULL;
+    struct node *head = NULL;
+    struct node *prev = NULL;
 
-    for (int i = 0; i < NUMNODES; i += 4)
+    for (int i = 0; i < NUMNODES; i += 1)
     {
-        node *curr = (node *)malloc(sizeof(node));
+        struct node *curr = (struct node *)malloc(sizeof(struct node));
         curr->buffer = 0x0000000000000000 + i;
         curr->size = 256;
         curr->partitions = 16;
@@ -78,10 +78,25 @@ node *populate_list()
         prev = curr;
         if (i == NUMNODES - 1)
         {
-            prev->next = head;
+            prev->next = NULL;
         }
     }
     return head;
+}
+
+void printList(struct node *head)
+{
+    struct node *current = head;
+    int i = 0;
+
+    while (current != NULL)
+    {
+        printf("[%03d:%08X:%08X]:{buf:%d,siz:%d,par:%d} ", i, current, current->next, current->buffer, current->size, current->partitions);
+        if (current->next != NULL) printf(" -> \n");
+        current = current->next;
+        i++;
+    }
+    printf("\n");
 }
 
 void populateArray(struct node *head, int NUMNODES)
