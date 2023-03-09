@@ -27,7 +27,7 @@ unsigned long long myCPUTimer(unsigned long long start=0){
 struct node {
 int* buffer;
 int size;
-int op; 
+int partitions; 
 struct node* next;
 };
 
@@ -51,8 +51,12 @@ newNode->next = *headRef;
 }
 
 node* populate_list(int partitions){
+	node* head = NULL; 
+	node* prev = NULL; 
 	node* curr = (node*)malloc(sizeof(node));
-	curr->
+	curr->buffer = 0x0000000000000000;
+	curr->size = 256;
+	curr->partitions = 16;
 }
 
 
