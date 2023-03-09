@@ -25,7 +25,9 @@ unsigned long long myCPUTimer(unsigned long long start=0){
 
 //LinkedList Construction
 struct node {
-int data;
+int* buffer;
+int size;
+int op; 
 struct node* next;
 };
 
@@ -46,6 +48,11 @@ struct node* newNode = malloc(sizeof(struct node));
 newNode->data = data;
 newNode->next = *headRef; 
 *headRef = newNode;
+}
+
+node* populate_list(int partitions){
+	node* curr = (node*)malloc(sizeof(node));
+	curr->
 }
 
 
