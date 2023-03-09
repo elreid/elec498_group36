@@ -50,7 +50,7 @@ newNode->next = *headRef;
 *headRef = newNode;
 }
 
-node* populate_list(int partitions){
+node* populate_list(){
 	node* head = NULL; 
 	node* prev = NULL; 
 	
