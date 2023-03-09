@@ -10,15 +10,17 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
+#define NUMNODES 5
 
-// TO-DO ADAM: needs to be made into global, cpu, etc.
-// TIMING KERNEL EXECUTION WITH CPU TIMERS:
-unsigned long long myCPUTimer(unsigned long long start = 0)
-{
-    timeval tv;
-    gettimeofday(&tv, 0);
-    return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
-} // returns time in microseconds
+
+//TO-DO ADAM: needs to be made into global, cpu, etc.
+//TIMING KERNEL EXECUTION WITH CPU TIMERS:
+unsigned long long myCPUTimer(unsigned long long start=0){
+
+  timeval tv;
+  gettimeofday(&tv, 0);
+  return ((tv.tv_sec*USECPSEC)+tv.tv_usec)-start;
+} //returns time in microseconds 
 
 
 //LinkedList Construction
@@ -53,19 +55,26 @@ void AddNode(struct node **headRef, int data)
 
 node* populate_list(int partitions){
 	node* curr = (node*)malloc(sizeof(node));
-	curr->
+	curr->buffer = 0x0000000000000000;
+	curr->size = 256;
+	curr->partitions = 16;
+}
+
+void populateArray(struct node *head, int NUMNODES){
+
+    struct node *current = head;
+
+    for(int i = 0; i < NUMNODES; i++){
+        tempArray[i] = current->buffer;
+        tempArray[i+1] = current-> size;
+        tempArray[i+2] = current -> partitions;
+        current = current->next;
+    }
 }
 
 
-/*
-for(int i = 0; i < NUMPARTITIONS*3; i++){
-    iterate through each partition to add required number of nodes using functions above.
- (insert nodes to list with specified values)
-}
-*/
 
-int main(int argc, char **argv)
-{
+int main(int argc, char** argv) {
     int process_Rank, size_Of_Cluster;
     int buf[100], provided;
     // MPI_Init(&argc, &argv);
