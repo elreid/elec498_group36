@@ -6,14 +6,13 @@
 #include <iostream>
 #include <time.h>
 #include <sys/time.h>
+#include "cuda_runtime.h"
 
 #define N 16
 #define USECPSEC 1000000ULL
-#define NUMPARTITIONS 4
+//#define NUMPARTITIONS 4
 #define NUMNODES 5
 
-// TO-DO ADAM: needs to be made into global, cpu, etc.
-// TIMING KERNEL EXECUTION WITH CPU TIMERS:
 unsigned long long myCPUTimer(unsigned long long start = 0)
 {
 
@@ -99,7 +98,7 @@ void printList(struct node *head)
     printf("\n");
 }
 
-void populateArray(struct node *head, int NUMNODES)
+void populateArray(struct node *head)
 {
 
     struct node *current = head;
@@ -113,6 +112,7 @@ void populateArray(struct node *head, int NUMNODES)
     }
 }
 
+//num nodes * num variables * sizeof(float) <--- note to self
 int main(int argc, char **argv)
 {
     int process_Rank, size_Of_Cluster;
