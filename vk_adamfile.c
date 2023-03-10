@@ -14,17 +14,8 @@
 
 
 
-int tempArray[256];
 
-// TO-DO ADAM: needs to be made into global, cpu, etc.
-// // TIMING KERNEL EXECUTION WITH CPU TIMERS:
-// unsigned long long myCPUTimer(unsigned long long start = 0)
-// {
 
-//     timeval tv;
-//     gettimeofday(&tv, 0);
-//     return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
-// } // returns time in microseconds
 
 // LinkedList Construction
 struct node
@@ -34,6 +25,10 @@ struct node
     int partitions;
     struct node *next;
 };
+
+
+
+
 
 // length of LinkedList testing function
 int LengthLinkedList(struct node *head)
@@ -48,14 +43,9 @@ int LengthLinkedList(struct node *head)
     return count;
 }
 
-// add Node function
-// void AddNode(struct node **headRef, int data)
-// {
-//     struct node *newNode = malloc(sizeof(struct node));
-//     newNode->data = data;
-//     newNode->next = *headRef;
-//     *headRef = newNode;
-// }
+
+
+
 
 struct node *populate_list()
 {
@@ -91,6 +81,9 @@ struct node *populate_list()
 }
 
 
+
+
+
 void printList(struct node *head)
 {
     struct node *current = head;
@@ -99,22 +92,34 @@ void printList(struct node *head)
     while (current != NULL)
     {
         printf("[%03d:%08X:%08X]:{buf:%08X,siz:%d,par:%d} ", i, current, current->next, current->buffer, current->size, current->partitions);
-        if (current->next != NULL) printf(" -> \n");
+        if (current->next != NULL)
+            printf(" -> \n");
         current = current->next;
         i++;
     }
     printf("\n");
 }
 
+
+
+
+
+
 void print_array(int *array, int length)
 {
     for (int i = 0; i < length; i++)
     {
-        if(i%3==0) printf("\n");
+        if (i % 3 == 0)
+            printf("\n");
         printf("%08X ", array[i]);
     }
     printf("\n");
 }
+
+
+
+
+
 
 void populateArray(struct node *head, int **arr)
 {
@@ -123,12 +128,14 @@ void populateArray(struct node *head, int **arr)
 
     free(*arr);
     *arr = malloc((NUMNODES * 3) * sizeof(int));
-    if (*arr == NULL){
+    if (*arr == NULL)
+    {
         printf("Void array.\n");
         return;
     }
-    else{
-        for (int i = 0; i < NUMNODES*3; i+=3)
+    else
+    {
+        for (int i = 0; i < NUMNODES * 3; i += 3)
         {
             (*arr)[i] = current->buffer;
             (*arr)[i + 1] = current->size;
@@ -136,14 +143,17 @@ void populateArray(struct node *head, int **arr)
             current = current->next;
         }
     }
-
-
 }
+
+
+
+
+
 
 
 int main(int argc, char **argv)
 {
-    
+
     struct node *head = populate_list();
     *(head->buffer) = 2;
     printList(head);
@@ -154,8 +164,7 @@ int main(int argc, char **argv)
     array = NULL;
     populateArray(head, &array);
     // change(&array, 256);
-    print_array(array, NUMNODES*3);
+    print_array(array, NUMNODES * 3);
 
-
-    return 0; 
+    return 0;
 }
