@@ -99,18 +99,40 @@ void printList(struct node *head)
     printf("\n");
 }
 
-void populateArray(struct node *head, int NUMNODES)
-{
 
+void populateArray(struct node *head, int **arr)
+{
     struct node *current = head;
 
-    for (int i = 0; i < NUMNODES; i++)
+    free(*arr);
+    *arr = malloc((NUMNODES * 3) * sizeof(int));
+    if (*arr == NULL)
     {
-        tempArray[i] = current->buffer;
-        tempArray[i + 1] = current->size;
-        tempArray[i + 2] = current->partitions;
-        current = current->next;
+        printf("ERR: Void array.\n");
+        return;
     }
+    else
+    {
+        for (int i = 0; i < NUMNODES * 3; i += 3)
+        {
+            (*arr)[i] = current->buffer;
+            (*arr)[i + 1] = current->size;
+            (*arr)[i + 2] = current->partitions;
+            current = current->next;
+        }
+    }
+}
+
+
+void printArray(int *array, int length)
+{
+    for (int i = 0; i < length; i++)
+    {
+        if (i % 3 == 0)
+            printf("\n");
+        printf("%08X ", array[i]);
+    }
+    printf("\n");
 }
 
 int main(int argc, char **argv)
@@ -145,6 +167,26 @@ int main(int argc, char **argv)
         MPI_Recv(&value, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
         printf("Rank %d received value %d\n", process_Rank, value);
     }
+    
+    /**
+     * @brief Creating the linked list, printing it, 
+     * and populating an array based 
+     * on the linked list.
+     * 
+     */
+    struct node *head = populate_list();
+    printList(head); // TODO: Remove this line
+    int *array = NULL;
+    populateArray(head, &array);
+    printArray(array, NUMNODES * 3); // TODO: Remove this line
+
+    /**
+     * @brief Allocate memory for the array on the CPU and GPU
+     * 
+     */
+
+
+
 
     MPI_Finalize();
 

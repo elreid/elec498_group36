@@ -123,7 +123,6 @@ void print_array(int *array, int length)
 
 void populateArray(struct node *head, int **arr)
 {
-
     struct node *current = head;
 
     free(*arr);
@@ -158,13 +157,16 @@ int main(int argc, char **argv)
     *(head->buffer) = 2;
     printList(head);
 
-    // int array[256] = {0};
-
     int *array;
     array = NULL;
     populateArray(head, &array);
     // change(&array, 256);
     print_array(array, NUMNODES * 3);
+
+    printf("array[0]\t= %08X\n", array[0]);
+    int * var = (int *)array[0];
+    printf("var\t= %08X\n", var);
+    printf("*var\t= %08X\n", *var);
 
     return 0;
 }
