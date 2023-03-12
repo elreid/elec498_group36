@@ -11,7 +11,7 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-#define NUMNODES 10
+#define NUMNODES 5
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
@@ -196,6 +196,7 @@ int main(int argc, char **argv)
     cudaMalloc((void**)&d_A, size);
 
     // matrix_add(h_A, h_B, h_C, size);
+    cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
 
     cudaFreeHost(h_A);
 
