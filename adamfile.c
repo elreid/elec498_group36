@@ -8,7 +8,7 @@
 #include <cuda.h>
 #include <mpi.h>
 #include "device_launch_parameters.h"
-#include <ctime>
+// #include <ctime>
 
 #define N 16
 #define USECPSEC 1000000ULL
