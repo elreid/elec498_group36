@@ -11,7 +11,7 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-#define NUMNODES 5
+#define NUMNODES 10
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
@@ -95,7 +95,7 @@ void printList(struct node *head)
 
     while (current != NULL)
     {
-        printf("[%03d:%08X:%08X]:{buf:%d,siz:%d,par:%d} ", i, current, current->next, current->buffer, current->size, current->partitions);
+        printf("[%03d:%08X:%08X]:{buf:%08X,siz:%03d,par:%03d} ", i, current, current->next, current->buffer, current->size, current->partitions);
         if (current->next != NULL) printf(" -> \n");
         current = current->next;
         i++;
