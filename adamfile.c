@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
-// #include "cuda_runtime.h"
+#include "cuda_runtime.h"
 #include <cuda.h>
 #include <mpi.h>
 #include "device_launch_parameters.h"
