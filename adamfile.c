@@ -169,22 +169,35 @@ int main(int argc, char **argv)
     }
     
     /**
-     * @brief Creating the linked list, printing it, 
-     * and populating an array based 
-     * on the linked list.
+     * @brief Creating the linked list, printing it
      * 
      */
     struct node *head = populate_list();
     printList(head); // TODO: Remove this line
-    int *array = NULL;
-    populateArray(head, &array);
-    printArray(array, NUMNODES * 3); // TODO: Remove this line
 
     /**
-     * @brief Allocate memory for the array on the CPU and GPU
+     * @brief Allocate memory for the array on the CPU and GPU,
+     * then populating the arraay and checking it 
      * 
      */
 
+    //do host and device memory inits
+    size_t size = (NUMNODES*3)*sizeof(int);
+    int *h_A = (int*)malloc(size);
+
+    populateArray(head, &h_A);
+    printArray(h_A, size); // TODO: Remove this line
+
+    int *h_A = (int*)malloc(size);
+
+    int *d_A;
+    cudaMalloc((void**)&d_A, size);
+
+    // matrix_add(h_A, h_B, h_C, size);
+
+    cudaFreeHost(h_A);
+
+    cudaFree(d_A);
 
 
 
