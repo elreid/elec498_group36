@@ -4,6 +4,7 @@
         "__node_handle": "c",
         "iterator": "c",
         "__tuple": "c",
-        "array": "c"
+        "array": "c",
+        "stdlib.h": "c"
     }
 }
