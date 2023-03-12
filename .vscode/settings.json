@@ -5,6 +5,7 @@
         "iterator": "c",
         "__tuple": "c",
         "array": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "time.h": "c"
     }
 }
