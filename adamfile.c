@@ -188,7 +188,6 @@ int main(int argc, char **argv)
     populateArray(head, &h_A);
     printArray(h_A, size); // TODO: Remove this line
 
-    int *h_A = (int*)malloc(size);
 
     int *d_A;
     cudaMalloc((void**)&d_A, size);
