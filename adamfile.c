@@ -188,7 +188,7 @@ int main(int argc, char **argv)
     int *h_A = (int*)malloc(size);
 
     populateArray(head, &h_A);
-    // printArray(h_A, size); // TODO: Remove this line
+    printArray(h_A, size); // TODO: Remove this line
 
 
     int *d_A;
