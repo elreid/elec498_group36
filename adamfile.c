@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
+#include <cuda.h>
 
 #define N 16
 #define USECPSEC 1000000ULL
