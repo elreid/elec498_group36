@@ -60,10 +60,12 @@ struct node *populate_list()
     struct node *head = NULL;
     struct node *prev = NULL;
 
+    int allocator = 0;
+
     for (int i = 0; i < NUMNODES; i += 1)
     {
         struct node *curr = (struct node *)malloc(sizeof(struct node));
-        curr->buffer = 0x0000000000000000 + i;
+        curr->buffer = &allocator + i;
         curr->size = 256;
         curr->partitions = 16;
         curr->next = NULL;
@@ -188,8 +190,7 @@ int main(int argc, char **argv)
     int *h_A = (int*)malloc(size);
 
     populateArray(head, &h_A);
-    printArray(h_A, NUMNODES * 3); // TODO: Remove this line
-
+    // printArray(h_A, NUMNODES * 3); // TODO: Remove this line
 
     int *d_A;
     cudaMalloc((void**)&d_A, size);
