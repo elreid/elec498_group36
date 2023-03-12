@@ -49,15 +49,15 @@ int LengthLinkedList(struct node *head)
 }
 
 // add Node function
-void AddNode(struct node **headRef, int* buffer, int size, int partitions)
-{
-    struct node *newNode = malloc(sizeof(struct node));
-    newNode->buffer = buffer;
-    newNode->size = size;
-    newNode->partitions = partitions;
-    newNode->next = *headRef;
-    *headRef = newNode;
-}
+// void AddNode(struct node **headRef, int* buffer, int size, int partitions)
+// {
+//     struct node *newNode = malloc(sizeof(struct node));
+//     newNode->buffer = buffer;
+//     newNode->size = size;
+//     newNode->partitions = partitions;
+//     newNode->next = *headRef;
+//     *headRef = newNode;
+// }
 
 struct node *populate_list()
 {
@@ -113,7 +113,7 @@ void populateArray(struct node *head, int **arr)
     struct node *current = head;
 
     free(*arr);
-    *arr = malloc((NUMNODES * 3) * sizeof(int));
+    *arr = (int *)malloc((NUMNODES * 3) * sizeof(int));
     if (*arr == NULL)
     {
         printf("ERR: Void array.\n");
@@ -123,10 +123,10 @@ void populateArray(struct node *head, int **arr)
     {
         for (int i = 0; i < NUMNODES * 3; i += 3)
         {
-            (*arr)[i] = current->buffer;
-            (*arr)[i + 1] = current->size;
-            (*arr)[i + 2] = current->partitions;
-            current = current->next;
+            (*arr)[i]       = (int)(current->buffer);
+            (*arr)[i + 1]   = current->size;
+            (*arr)[i + 2]   = current->partitions;
+            current         = current->next;
         }
     }
 }
@@ -291,8 +291,8 @@ int main(int argc, char **argv)
 
     //setup threads per block and number of blocks.
 	//should change D to just be strictly 16 later based on documentation ??...
-	// dim3 threadsPerBlock(TPB, TPB);
-	// dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
+	dim3 threadsPerBlock(TPB, TPB);
+	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	//addition by individual threads:
 	cudaEventRecord(start1, 0);
