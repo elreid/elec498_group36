@@ -228,7 +228,7 @@ int main(int argc, char **argv)
     cudaMalloc((void**)&d_list_arr, size_list_arr);
 
     // matrix_add(h_A, h_B, h_C, size);
-    cudaMemcpy(d_list_arr, h_list_arr, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
     cudaFreeHost(h_list_arr);
 
@@ -291,12 +291,12 @@ int main(int argc, char **argv)
 
     //setup threads per block and number of blocks.
 	//should change D to just be strictly 16 later based on documentation ??...
-	dim3 threadsPerBlock(TPB, TPB);
-	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
+	// dim3 threadsPerBlock(TPB, TPB);
+	// dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	//addition by individual threads:
 	cudaEventRecord(start1, 0);
-	matrixAddition << < numberOfBlocks, threadsPerBlock >> >(d_A, d_B, d_C, D);
+	matrixAddition <<<numberOfBlocks, threadsPerBlock>>>(d_A, d_B, d_C, D);
 	cudaEventRecord(stop1, 0);
 	cudaEventSynchronize(stop1);
 	cudaMemcpy(h_C1, d_C, size, cudaMemcpyDeviceToHost);
