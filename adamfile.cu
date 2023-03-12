@@ -123,7 +123,7 @@ void populateArray(struct node *head, int **arr)
     {
         for (int i = 0; i < NUMNODES * 3; i += 3)
         {
-            (*arr)[i]       = (int)(current->buffer);
+            (*arr)[i]       = (int)(&(current->buffer));
             (*arr)[i + 1]   = current->size;
             (*arr)[i + 2]   = current->partitions;
             current         = current->next;
