@@ -1,18 +1,21 @@
 #include <stdio.h>
-#include <mpi.h>
-#include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
 #include "cuda_runtime.h"
 #include <cuda.h>
+#include <mpi.h>
+#include "device_launch_parameters.h"
+#include <ctime>
 
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
 #define NUMNODES 5
 #define TPB 16	//num threads in a block
+#define D 256
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
@@ -215,14 +218,14 @@ int main(int argc, char **argv)
      */
 
     //do host and device memory inits
-    size_t size = (NUMNODES*3)*sizeof(int);
-    int *h_list_arr = (int*)malloc(size);
+    size_t size_list_arr = (NUMNODES*3)*sizeof(int);
+    int *h_list_arr = (int*)malloc(size_list_arr);
 
     populateArray(head, &h_list_arr);
-    printArray(h_A, NUMNODES * 3); // TODO: Remove this line
+    printArray(h_list_arr, NUMNODES * 3); // TODO: Remove this line
 
     int *d_list_arr;
-    cudaMalloc((void**)&d_list_arr, size);
+    cudaMalloc((void**)&d_list_arr, size_list_arr);
 
     // matrix_add(h_A, h_B, h_C, size);
     cudaMemcpy(d_list_arr, h_list_arr, size, cudaMemcpyHostToDevice);
