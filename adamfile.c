@@ -13,13 +13,12 @@
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
-unsigned long long myCPUTimer(unsigned long long start = 0)
-{
-
-    timeval tv;
-    gettimeofday(&tv, 0);
-    return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
-} // returns time in microseconds
+// unsigned long long myCPUTimer(unsigned long long start = 0)
+// {
+//     struct timeval tv;
+//     gettimeofday(&tv, 0);
+//     return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
+// } // returns time in microseconds
 
 // LinkedList Construction
 struct node
@@ -44,10 +43,12 @@ int LengthLinkedList(struct node *head)
 }
 
 // add Node function
-void AddNode(struct node **headRef, int data)
+void AddNode(struct node **headRef, int* buffer, int size, int partitions)
 {
     struct node *newNode = malloc(sizeof(struct node));
-    newNode->data = data;
+    newNode->buffer = buffer;
+    newNode->size = size;
+    newNode->partitions = partitions;
     newNode->next = *headRef;
     *headRef = newNode;
 }
