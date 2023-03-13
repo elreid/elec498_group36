@@ -197,15 +197,15 @@ int main(int argc, char **argv)
     populateArray(head, &h_list_arr);
     printArray(h_list_arr, NUMNODES * 3); // TODO: Remove this line
 
-    int *d_list_arr;
-    cudaMalloc((void**)&d_list_arr, size_list_arr);
+    // int *d_list_arr;
+    // cudaMalloc((void**)&d_list_arr, size_list_arr);
 
-    // matrix_add(h_A, h_B, h_C, size);
-    cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
+    // // matrix_add(h_A, h_B, h_C, size);
+    // cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
-    cudaFreeHost(h_list_arr);
+    // cudaFreeHost(h_list_arr);
 
-    cudaFree(d_list_arr);
+    // cudaFree(d_list_arr);
 
     launch_matrix_multiply();
     // Finishing touches
