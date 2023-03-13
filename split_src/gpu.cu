@@ -8,7 +8,8 @@
 #include <cuda.h>
 #include "device_launch_parameters.h"
 
-
+#define TPB 16	//num threads in a block
+#define D 256
 
 /***
  * @brief From "forvanya.txt"
