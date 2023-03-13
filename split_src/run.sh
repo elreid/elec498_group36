@@ -1,14 +1,15 @@
 #!/bin/bash
 if mpicc -c cpu.c -o cpu.o; then 
     if nvcc -c gpu.cu -o gpu.o; then
-        mpicc cpu.o gpu.o -lcudart
+        if mpicc cpu.o gpu.o -lcudart; then
+            ./a.out
+        fi
     else
-        echo "\033[1;31mGPU compilation failed\e[0m"
+        echo "GPU compilation failed"
         return
     fi
 else
-    echo "\033[1;31mCPU compilation failed\e[0m"
+    echo "CPU compilation failed"
     return
 fi
 
-./a.out
