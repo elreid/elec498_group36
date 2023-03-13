@@ -10,7 +10,7 @@
 
 #define TPB 16	//num threads in a block
 #define D 256
-
+toast
 /***
  * @brief From "forvanya.txt"
 */
