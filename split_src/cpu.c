@@ -182,7 +182,7 @@ int main(int argc, char **argv)
      * 
      */
     struct node *head = populate_list();
-    printList(head); // TODO: Remove this line
+    // printList(head); // TODO: Remove this line
 
     /**
      * @brief Allocate memory for the array on the CPU and GPU,
@@ -195,7 +195,7 @@ int main(int argc, char **argv)
     int *h_list_arr = (int*)malloc(size_list_arr);
 
     populateArray(head, &h_list_arr);
-    printArray(h_list_arr, NUMNODES * 3); // TODO: Remove this line
+    // printArray(h_list_arr, NUMNODES * 3); // TODO: Remove this line
 
     // int *d_list_arr;
     // cudaMalloc((void**)&d_list_arr, size_list_arr);

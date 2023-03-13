@@ -108,6 +108,4 @@ extern "C" void launch_matrix_multiply()
 	printf("\n normal matrix addition: %0.2f\n", gpu_time1);
 
 
-
-
 }
