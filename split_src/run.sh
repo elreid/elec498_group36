@@ -6,10 +6,8 @@ if mpicc -c cpu.c -o cpu.o; then
         fi
     else
         echo "GPU compilation failed"
-        return
     fi
 else
     echo "CPU compilation failed"
-    return
 fi
 
