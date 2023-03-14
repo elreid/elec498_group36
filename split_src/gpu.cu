@@ -49,7 +49,7 @@ extern "C" void launch_matrix_multiply()
 	clock_t start_test, end_test;
 	double cpu_time_used;
 	
-	start = clock();
+	start_test = clock();
 
 
     cudaEventCreate(&start);
@@ -114,10 +114,10 @@ extern "C" void launch_matrix_multiply()
 	cudaEventElapsedTime(&gpu_time1, start1, stop1);
 	printf("normal matrix addition: \t%0.2f\n", gpu_time1);
 
-	end = clock();
+	end_test = clock();
     cpu_time_used = ((double) (end_test - start_test)) / CLOCKS_PER_SEC;
 
-	printf("launch_matrix_multiply: \t0.2f\n", cpu_time_used);
+	printf("launch_matrix_multiply: \t%0.2f\n", cpu_time_used);
 
 
 }
