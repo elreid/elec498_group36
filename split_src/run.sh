@@ -15,10 +15,7 @@ if module load openmpi cuda; then
 fi
 
 
-
-if 0; then
-    mpicc -c cpu.c -o cpu.o
-    nvcc -c gpu.cu -o gpu.o
-    mpicc cpu.o gpu.o -lcudart
-    ssh vmck18@graham.computecanada.ca
-fi
+#     mpicc -c cpu.c -o cpu.o
+#     nvcc -c gpu.cu -o gpu.o
+#     mpicc cpu.o gpu.o -lcudart
+#     ssh vmck18@graham.computecanada.ca
