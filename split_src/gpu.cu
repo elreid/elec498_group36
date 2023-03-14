@@ -9,7 +9,7 @@
 #include "device_launch_parameters.h"
 
 #define TPB 16	//num threads in a block
-#define D 256
+#define D 1024
 /***
  * @brief From "forvanya.txt"
 */
@@ -56,10 +56,10 @@ extern "C" void launch_matrix_multiply()
     size_t size = D*D*sizeof(int);
 
     //create pointers for host related stuff, allocate the memory required
-	int *h_A = (int*)malloc(size);
-	int *h_B = (int*)malloc(size);
-	int *h_C = (int*)malloc(size);
-	int *h_C1 = (int*)malloc(size);
+	int *h_A 	= (int*)malloc(size);
+	int *h_B 	= (int*)malloc(size);
+	int *h_C 	= (int*)malloc(size);
+	int *h_C1 	= (int*)malloc(size);
 
 	//create pointers for device related stuff, allocate the memory required
 	int *d_A, *d_B, *d_C;
@@ -105,7 +105,7 @@ extern "C" void launch_matrix_multiply()
 	cudaEventSynchronize(stop1);
 	cudaMemcpy(h_C1, d_C, size, cudaMemcpyDeviceToHost);
 	cudaEventElapsedTime(&gpu_time1, start1, stop1);
-	printf("\n normal matrix addition: %0.2f\n", gpu_time1);
+	printf("\nnormal matrix addition: %0.2f\n", gpu_time1);
 
 
 }
