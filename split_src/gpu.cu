@@ -45,12 +45,6 @@ extern "C" void launch_matrix_multiply()
     time_t t;
     cudaEvent_t start, stop, start1, stop1;
 
-	//general function timing // banya stuff 
-	clock_t start_test, end_test;
-	double cpu_time_used;
-	start_test = clock();
-	// banya stuff
-
 
     cudaEventCreate(&start);
 	cudaEventCreate(&start1);
@@ -88,9 +82,19 @@ extern "C" void launch_matrix_multiply()
 	}
 
     //run it back baby, host addition start, stop and method call
+	//general function timing // banya stuff 
+	clock_t start_test, end_test;
+	double cpu_time_used;
+	start_test = clock();
+	// banya stuff
 	cudaEventRecord(start, 0);
 	hostAddition(h_A, h_B, h_C, D);
 	cudaEventRecord(stop, 0);
+	// banya stuff
+	end_test = clock();
+    cpu_time_used = ((double) (end_test - start_test));
+	printf("(banya) h add time :\t\t%0.2f\n", cpu_time_used);
+	// banya stuff
 
 	//print out the results
 	cudaEventElapsedTime(&gpu_time, start, stop);
@@ -106,6 +110,8 @@ extern "C" void launch_matrix_multiply()
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	//addition by individual threads:
+	start_test = clock();
+	//
 	cudaEventRecord(start1, 0);
 	matrixAddition <<<numberOfBlocks, threadsPerBlock>>>(d_A, d_B, d_C, D);
 	cudaEventRecord(stop1, 0);
@@ -113,12 +119,10 @@ extern "C" void launch_matrix_multiply()
 	cudaMemcpy(h_C1, d_C, size, cudaMemcpyDeviceToHost);
 	cudaEventElapsedTime(&gpu_time1, start1, stop1);
 	printf("normal matrix addition:\t\t%0.2f\n", gpu_time1);
-
-
-
-	// banya stuff
+	//
 	end_test = clock();
-    cpu_time_used = ((double) (end_test - start_test)) / CLOCKS_PER_SEC;
-	printf("launch_matrix_multiply:\t\t%0.2f\n", cpu_time_used);
-	// banya stuff
+    cpu_time_used = ((double) (end_test - start_test));
+	printf("(banya) norm mat add :\t\t%0.2f\n", cpu_time_used);
+	//
+
 }
