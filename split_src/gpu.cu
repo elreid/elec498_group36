@@ -90,15 +90,15 @@ extern "C" void launch_matrix_multiply()
 	cudaEventRecord(start, 0);
 	hostAddition(h_A, h_B, h_C, D);
 	cudaEventRecord(stop, 0);
+
+	//print out the results
+	cudaEventElapsedTime(&gpu_time, start, stop);
+	printf("host addition time:\t\t%0.2f\n", gpu_time);
 	// banya stuff
 	end_test = clock();
     cpu_time_used = ((double) (end_test - start_test));
 	printf("(banya) h add time :\t\t%0.2f\n", cpu_time_used);
 	// banya stuff
-
-	//print out the results
-	cudaEventElapsedTime(&gpu_time, start, stop);
-	printf("host addition time:\t\t%0.2f\n", gpu_time);
 
 	//copy contents of host input matrices to the device
 	cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
