@@ -9,7 +9,7 @@
 #include "device_launch_parameters.h"
 
 #define TPB 16	//num threads in a block
-#define D 256	//num of elements in a row/column
+#define D 1024	//num of elements in a row/column
 /***
  * @brief From "forvanya.txt"
 */
@@ -118,7 +118,7 @@ extern "C" void launch_matrix_multiply()
 
 	// banya stuff
 	end_test = clock();
-    cpu_time_used = ((double) (end_test - start_test));
+    cpu_time_used = ((double) (end_test - start_test)) / CLOCKS_PER_SEC;
 	printf("launch_matrix_multiply:\t\t%0.2f\n", cpu_time_used);
 	// banya stuff
 }
