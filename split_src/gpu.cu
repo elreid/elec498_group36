@@ -9,7 +9,7 @@
 #include "device_launch_parameters.h"
 
 #define TPB 16	//num threads in a block
-#define D 1024
+#define D 256	//num of elements in a row/column
 /***
  * @brief From "forvanya.txt"
 */
@@ -44,6 +44,13 @@ extern "C" void launch_matrix_multiply()
      */
     time_t t;
     cudaEvent_t start, stop, start1, stop1;
+
+	//general function timing
+	clock_t start_test, end_test;
+	double cpu_time_used;
+	
+	start = clock();
+
 
     cudaEventCreate(&start);
 	cudaEventCreate(&start1);
@@ -87,7 +94,7 @@ extern "C" void launch_matrix_multiply()
 
 	//print out the results
 	cudaEventElapsedTime(&gpu_time, start, stop);
-	printf("host addition time: %0.2f\n", gpu_time);
+	printf("host addition time: \t%0.2f\n", gpu_time);
 
 	//copy contents of host input matrices to the device
 	cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
@@ -105,7 +112,12 @@ extern "C" void launch_matrix_multiply()
 	cudaEventSynchronize(stop1);
 	cudaMemcpy(h_C1, d_C, size, cudaMemcpyDeviceToHost);
 	cudaEventElapsedTime(&gpu_time1, start1, stop1);
-	printf("\nnormal matrix addition: %0.2f\n", gpu_time1);
+	printf("normal matrix addition: \t%0.2f\n", gpu_time1);
+
+	end = clock();
+    cpu_time_used = ((double) (end_test - start_test)) / CLOCKS_PER_SEC;
+
+	printf("launch_matrix_multiply: \t0.2f\n", cpu_time_used);
 
 
 }
