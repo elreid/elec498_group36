@@ -78,18 +78,18 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
 	cudaEventRecord(event);
 	int i = 0;
-	while(cudaEventQuery(event) != cudaSuccess) 
-	{
-		if (i==0)
-			printf("Chugging .\r");
-		if (i==1)
-			printf("Chugging ..\r");
-		if (i==2)
-			printf("Chugging ...\r");
-		i++;
-		if(i>=2)
-			i = 0;
-	}
+	// while(cudaEventQuery(event) != cudaSuccess) 
+	// {
+	// 	if (i==0)
+	// 		printf("Chugging .\r");
+	// 	if (i==1)
+	// 		printf("Chugging ..\r");
+	// 	if (i==2)
+	// 		printf("Chugging ...\r");
+	// 	i++;
+	// 	if(i>=2)
+	// 		i = 0;
+	// }
 	printArray(check_sum, num_nodes);
 }
 
