@@ -20,12 +20,12 @@ void launch_matrix_multiply();
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
-unsigned long long myCPUTimer(unsigned long long start = 0)
-{
-    struct timeval tv;
-    gettimeofday(&tv, 0);
-    return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
-} // returns time in microseconds
+// unsigned long long myCPUTimer(unsigned long long start = 0)
+// {
+//     struct timeval tv;
+//     gettimeofday(&tv, 0);
+//     return ((tv.tv_sec * USECPSEC) + tv.tv_usec) - start;
+// } // returns time in microseconds
 
 // LinkedList Construction
 struct node

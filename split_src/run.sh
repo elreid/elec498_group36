@@ -7,10 +7,10 @@ if module load openmpi cuda; then
                 ./a.out
             fi
         else
-            echo "GPU compilation failed"
+            echo -e "\n == GPU compilation failed == \n\n"
         fi
     else
-        echo "CPU compilation failed"
+        echo -e "\n == CPU compilation failed == \n\n"
     fi
 fi
 
