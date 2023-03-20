@@ -20,3 +20,4 @@ fi
 #     mpicc cpu.o gpu.o -lcudart
 #     ssh vmck18@graham.computecanada.ca
 #     chmod +x run.sh
+#     mpicc -I/usr/local/cuda/include -L/usr/local/cuda/lib64 cpu.c -lcudart -o cpu.o
