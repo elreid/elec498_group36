@@ -77,13 +77,21 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	cudaEventCreateWithFlags(&event,cudaEventDisableTiming);
 	master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
 	cudaEventRecord(event);
+	int i = 0;
 	while(cudaEventQuery(event) != cudaSuccess) 
 	{
-		int i = 0; 
-		i = 1 + 1;
+		case(i):
+			0: printf("Chugging .\r");
+			break;
+			1: printf("Chugging ..\r");
+			break;
+			2: printf("Chugging ...\r");
+			default: printf("Chugging .\r");
+		i = i+1;
+		if (i>=3)
+			i = 0;
 	}
 	printArray(check_sum, num_nodes);
-	cudaEventDestroy(event);
 }
 
 extern "C" void launch_matrix_multiply()
