@@ -14,6 +14,7 @@
 /***
  * @brief From "forvanya.txt"
 */
+
 void hostAddition(int *A, int *B, int *C, int size) 
 { 
 	for (int i = 0; i < size; i++) {
@@ -36,7 +37,7 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
  * @brief From "forvanya.txt"
  */
 
-extern "C" void launch_master(int * d_arr)
+extern "C" void launch_master(int * d_arr, int * CHECKSUM, int NUMNODES)
 {
 	printf("d_arr: %X\n", d_arr);
 	for(int i = 0; i < NUMNODES*3; i++){
