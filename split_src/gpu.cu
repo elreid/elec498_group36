@@ -10,6 +10,7 @@
 
 #define TPB 16	//num threads in a block
 #define D 256	//num of elements in a row/column
+
 /***
  * @brief From "forvanya.txt"
 */
@@ -25,6 +26,8 @@ void hostAddition(int *A, int *B, int *C, int size)
 __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 	int row = blockIdx.y*blockDim.y + threadIdx.y;
 	int col = blockIdx.x*blockDim.x + threadIdx.x;
+
+	printf("blockIdx.x: %d, blockIdx.y: %d", blockIdx.x, blockIdx.y);
 
 	if (row < size && col < size) {
 		int temp = row * size + col;

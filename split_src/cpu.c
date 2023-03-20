@@ -12,8 +12,8 @@
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
 #define NUMNODES 5
-#define TPB 16	//num threads in a block
-#define D 256
+// #define TPB 16	//num threads in a block
+// #define D 256
 
 // callable cuda functions from "gpu.cu"
 void launch_matrix_multiply();
