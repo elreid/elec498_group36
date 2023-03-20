@@ -20,7 +20,7 @@ void launch_master(int * d_arr, int * CHECKSUM, int NUMNODES);
 void launch_matrix_multiply();
 
 // GLOBAL CHECKSUM VARIABLE
-int CHECKSUM[NUMNODES] = {0};
+int  CHECKSUM[NUMNODES] = {0};
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
     // matrix_add(h_A, h_B, h_C, size);
     cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
-    launch_master(d_list_arr, &CHECKSUM, NUMNODES);
+    launch_master(d_list_arr, CHECKSUM, NUMNODES);
 
     launch_matrix_multiply();
 
