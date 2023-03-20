@@ -16,6 +16,7 @@
 // #define D 256
 
 // callable cuda functions from "gpu.cu"
+void launch_master(int * d_arr);
 void launch_matrix_multiply();
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
