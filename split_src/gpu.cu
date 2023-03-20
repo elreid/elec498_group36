@@ -14,6 +14,16 @@
 /***
  * @brief From "forvanya.txt"
 */
+void printArray(int *array, int length)
+{
+    for (int i = 0; i < length; i++)
+    {
+        if (i % 3 == 0)
+            printf("\n");
+        printf("%08X ", array[i]);
+    }
+    printf("\n");
+}
 
 void hostAddition(int *A, int *B, int *C, int size) 
 { 
@@ -63,8 +73,17 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	dim3 threadsPerBlock(TPB, TPB);
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
-
+	cudaEvent_t event;
+	cudaEventCreateWithFlags(&event,cudaEventDisableTiming);
 	master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
+	cudaEventRecord(event);
+	while(cudaEventQuery(event) != cudaSuccess) 
+	{
+		int i = 0; 
+		i = 1 + 1;
+	}
+	printArray(check_sum, num_nodes);
+	cudaEventDestroy(event);
 }
 
 extern "C" void launch_matrix_multiply()
