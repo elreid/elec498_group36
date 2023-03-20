@@ -16,7 +16,7 @@
 // #define D 256
 
 // callable cuda functions from "gpu.cu"
-void launch_master(int * d_arr);
+void launch_master(int * d_arr, int * CHECKSUM, int NUMNODES)
 void launch_matrix_multiply();
 
 // GLOBAL CHECKSUM VARIABLE
@@ -211,7 +211,7 @@ int main(int argc, char **argv)
     cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
     launch_master(d_list_arr, &CHECKSUM, NUMNODES);
-    
+
     launch_matrix_multiply();
 
     cudaFreeHost(h_list_arr);
