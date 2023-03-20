@@ -155,8 +155,8 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size_Of_Cluster);
     MPI_Comm_rank(MPI_COMM_WORLD, &process_Rank);
 
-    printf("Hello World from process %d of %d\n", process_Rank, size_Of_Cluster);
-    printf("%d\n", provided);
+    printf("Hello World from process %d of %d: ", process_Rank, size_Of_Cluster);
+    printf("Provides = %d\n", provided);
 
     if (process_Rank == 0)
     {
@@ -194,13 +194,14 @@ int main(int argc, char **argv)
 
     //do host and device memory inits
     size_t size_list_arr = (NUMNODES*3)*sizeof(int);
+
     int *h_list_arr = (int*)malloc(size_list_arr);
 
     populateArray(head, &h_list_arr);
     // printArray(h_list_arr, NUMNODES * 3); // TODO: Remove this line
 
     int *d_list_arr;
-    cudaMalloc((void**)&d_list_arr, size_list_arr);
+    cudaMalloc( (void**) &d_list_arr , size_list_arr );
 
     // matrix_add(h_A, h_B, h_C, size);
     cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);

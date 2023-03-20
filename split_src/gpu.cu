@@ -9,7 +9,7 @@
 #include "device_launch_parameters.h"
 
 #define TPB 16	//num threads in a block
-#define D 1024	//num of elements in a row/column
+#define D 256	//num of elements in a row/column
 /***
  * @brief From "forvanya.txt"
 */
@@ -37,14 +37,12 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 
 extern "C" void launch_matrix_multiply()
 {
-
     /**
      * @brief Doing the matrix multiplication
      * 
      */
     time_t t;
     cudaEvent_t start, stop, start1, stop1;
-
 
     cudaEventCreate(&start);
 	cudaEventCreate(&start1);
