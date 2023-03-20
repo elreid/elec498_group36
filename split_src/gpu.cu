@@ -80,15 +80,14 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	int i = 0;
 	while(cudaEventQuery(event) != cudaSuccess) 
 	{
-		case(i):
-			0: printf("Chugging .\r");
-			break;
-			1: printf("Chugging ..\r");
-			break;
-			2: printf("Chugging ...\r");
-			default: printf("Chugging .\r");
-		i = i+1;
-		if (i>=3)
+		if (i==0)
+			printf("Chugging .");
+		if (i==1)
+			printf("Chugging ..");
+		if (i==2)
+			printf("Chugging ...\n");
+		i++;
+		if(i>=2)
 			i = 0;
 	}
 	printArray(check_sum, num_nodes);
