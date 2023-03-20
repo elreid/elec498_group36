@@ -5,7 +5,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <mpi.h>
-#include <cuda_runtime.h>
+#include "cuda_runtime.h"
 
 
 #define N 16
