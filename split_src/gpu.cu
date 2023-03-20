@@ -44,6 +44,9 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	}
 	for(int i = 0; i < num_nodes; i++){
 		printf("check_sum[%d]: %d\n", i, check_sum[i]);
+		if (i==3){
+			check_sum[i] = 1;
+		}
 	}
 }
 
