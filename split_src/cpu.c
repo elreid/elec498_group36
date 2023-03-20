@@ -20,7 +20,7 @@ void launch_matrix_multiply();
 
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
-unsigned long long myCPUTimer(unsigned long start);
+unsigned long long myCPUTimer(unsigned long long start);
 {
     struct timeval tv;
     gettimeofday(&tv, 0);
