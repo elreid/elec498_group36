@@ -40,7 +40,7 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 {
 	printf("d_arr: %X\n", d_arr);
 	for(int i = 0; i < num_nodes*3; i++){
-		printf("d_arr[%d]: %d\n", i, d_arr[i]);
+		printf("d_arr[%d]: %d\n", i, *d_arr[i]);
 	}
 	for(int i = 0; i < num_nodes; i++){
 		printf("check_sum[%d]: %d\n", i, check_sum[i]);
