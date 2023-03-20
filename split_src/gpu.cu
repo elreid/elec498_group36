@@ -33,21 +33,38 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 		C[temp] = A[temp] + B[temp];
 	}//close if
 }
+
+/**
+ * @brief Master kernel for checksum flaggin
+ * 
+ * 
+ */
+__global__ void master_kernel(int * d_arr, int * check_sum, int num_nodes)
+{
+	check_sum[num_nodes-1] = 1;
+}
+
+
 /**
  * @brief Launching the master kernel with the params. from cpu.c
  */
 extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 {
-	printf("d_arr: %X\n", d_arr);
-	for(int i = 0; i < num_nodes*3; i++){
-		printf("d_arr[%d]: %d\n", i, *d_arr[i]);
-	}
-	for(int i = 0; i < num_nodes; i++){
-		printf("check_sum[%d]: %d\n", i, check_sum[i]);
-		if (i==3){
-			check_sum[i] = 1;
-		}
-	}
+	// printf("d_arr: %X\n", d_arr);
+	// for(int i = 0; i < num_nodes*3; i++){
+	// 	printf("d_arr[%d]: %d\n", i, d_arr[i]);
+	// }
+	// for(int i = 0; i < num_nodes; i++){
+	// 	printf("check_sum[%d]: %d\n", i, check_sum[i]);
+	// 	if (i==3){
+	// 		check_sum[i] = 1;
+	// 	}
+	// }
+	dim3 threadsPerBlock(TPB, TPB);
+	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
+
+
+	master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
 }
 
 extern "C" void launch_matrix_multiply()
