@@ -34,17 +34,16 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 	}//close if
 }
 /**
- * @brief From "forvanya.txt"
+ * @brief Launching the master kernel with the params. from cpu.c
  */
-
-extern "C" void launch_master(int * d_arr, int * CHECKSUM, int NUMNODES)
+extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 {
 	printf("d_arr: %X\n", d_arr);
-	for(int i = 0; i < NUMNODES*3; i++){
+	for(int i = 0; i < num_nodes*3; i++){
 		printf("d_arr[%d]: %d\n", i, d_arr[i]);
 	}
-	for(int i = 0; i < NUMNODES; i++){
-		printf("CHECKSUM[%d]: %d\n", i, CHECKSUM[i]);
+	for(int i = 0; i < num_nodes; i++){
+		printf("check_sum[%d]: %d\n", i, check_sum[i]);
 	}
 }
 
