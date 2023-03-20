@@ -5,6 +5,8 @@
 #include <time.h>
 #include <sys/time.h>
 #include <mpi.h>
+#include <cuda.h>
+
 
 #define N 16
 #define USECPSEC 1000000ULL
@@ -197,17 +199,19 @@ int main(int argc, char **argv)
     populateArray(head, &h_list_arr);
     // printArray(h_list_arr, NUMNODES * 3); // TODO: Remove this line
 
-    // int *d_list_arr;
-    // cudaMalloc((void**)&d_list_arr, size_list_arr);
+    int *d_list_arr;
+    cudaMalloc((void**)&d_list_arr, size_list_arr);
 
-    // // matrix_add(h_A, h_B, h_C, size);
-    // cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
-
-    // cudaFreeHost(h_list_arr);
-
-    // cudaFree(d_list_arr);
+    // matrix_add(h_A, h_B, h_C, size);
+    cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
     launch_matrix_multiply();
+
+    cudaFreeHost(h_list_arr);
+
+    cudaFree(d_list_arr);
+
+
     // Finishing touches
     MPI_Finalize();
     return 0;
