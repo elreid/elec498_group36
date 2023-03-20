@@ -27,8 +27,6 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 	int row = blockIdx.y*blockDim.y + threadIdx.y;
 	int col = blockIdx.x*blockDim.x + threadIdx.x;
 
-	printf("blockIdx.x: %d, blockIdx.y: %d", blockIdx.x, blockIdx.y);
-
 	if (row < size && col < size) {
 		int temp = row * size + col;
 		C[temp] = A[temp] + B[temp];
@@ -37,6 +35,11 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 /**
  * @brief From "forvanya.txt"
  */
+
+extern "C" void launch_master(int * d_arr)
+{
+	printf("d_arr: %X\n", d_arr);
+}
 
 extern "C" void launch_matrix_multiply()
 {
