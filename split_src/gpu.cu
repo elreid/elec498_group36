@@ -81,11 +81,11 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	while(cudaEventQuery(event) != cudaSuccess) 
 	{
 		if (i==0)
-			printf("Chugging .");
+			printf("Chugging .\r");
 		if (i==1)
-			printf("Chugging ..");
+			printf("Chugging ..\r");
 		if (i==2)
-			printf("Chugging ...\n");
+			printf("Chugging ...\r");
 		i++;
 		if(i>=2)
 			i = 0;
