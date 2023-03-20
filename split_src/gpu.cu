@@ -39,6 +39,12 @@ __global__ void matrixAddition(int *A, int *B, int *C, int size) {
 extern "C" void launch_master(int * d_arr)
 {
 	printf("d_arr: %X\n", d_arr);
+	for(int i = 0; i < NUMNODES*3; i++){
+		printf("d_arr[%d]: %d\n", i, d_arr[i]);
+	}
+	for(int i = 0; i < NUMNODES; i++){
+		printf("CHECKSUM[%d]: %d\n", i, CHECKSUM[i]);
+	}
 }
 
 extern "C" void launch_matrix_multiply()

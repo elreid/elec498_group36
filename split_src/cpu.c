@@ -19,6 +19,9 @@
 void launch_master(int * d_arr);
 void launch_matrix_multiply();
 
+// GLOBAL CHECKSUM VARIABLE
+int CHECKSUM[NUMNODES] = {0};
+
 // TO-DO ADAM: needs to be made into global, cpu, etc.
 // TIMING KERNEL EXECUTION WITH CPU TIMERS:
 unsigned long long myCPUTimer(unsigned long long start)
