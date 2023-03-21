@@ -75,6 +75,7 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	// 		check_sum[i] = 1;
 	// 	}
 	// }
+
 	dim3 threadsPerBlock(TPB, TPB);
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
@@ -82,21 +83,26 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	// printArray(check_sum, num_nodes);
 	// check_sum[num_nodes-1] = 1;
 
-	cudaStream_t stream_arr[num_nodes];
+	/***
+	 * @brief Creating streams for each node
+	 * Undefined number of streams 
+	*/
 
-   	for(int i=0;i<num_nodes;i++){
+	// cudaStream_t stream_arr[num_nodes];
 
-		cudaStream_t stream;
+   	// for(int i=0;i<num_nodes;i++){
+
+	// 	cudaStream_t stream;
 		
-		stream_arr[i] = stream;
+	// 	stream_arr[i] = stream;
    		
-		cudaStreamCreate(&stream);
+	// 	cudaStreamCreate(&stream);
 
-    	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
+    // 	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
     	
-  	}
+  	// }
 
-	cudaDeviceSynchronize();
+	// cudaDeviceSynchronize();
 
 
 
