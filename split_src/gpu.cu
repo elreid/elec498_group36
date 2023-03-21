@@ -69,9 +69,9 @@ __global__ void print_kernel() {
 	}
 }
 
-cudaStreamCallback_t callback_fn_test(void *userData)
+cudaStreamCallback_t callback_fn_test()
 {
-	Printf("Hello from callback %d", userData);
+	Printf("Hello from callback");
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
@@ -116,11 +116,11 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	{
 		print_kernel<<<1, 1, 0, streams[i]>>>();
 		cudaStreamAddCallback ( 
-			/*cudaStream_t stream*/streams[i], 
-			/*cudaStreamCallback_t callback*/callback_fn_test(), 
-			/*void* userData*/i
-			/*unsigned int  flags*/
-		)
+			/*cudaStream_t stream*/				streams[i], 
+			/*cudaStreamCallback_t callback*/	callback_fn_test(), 
+			/*void* userData*/					NULL,
+			/*unsigned int  flags*/				0
+		);
 	}
 
 	//***
