@@ -266,6 +266,8 @@ extern "C" void launch_matrix_multiply()
 int main(int argc, char **argv)
 {
 	// launch_matrix_multiply();
+	size_t size_list_arr = (NUMNODES*3)*sizeof(int);
+
 	int *d_list_arr;
     cudaMalloc( (void**) &d_list_arr , size_list_arr );
 
