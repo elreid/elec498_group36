@@ -58,7 +58,14 @@ __global__ void master_kernel(int * d_arr, int * check_sum, int num_nodes)
 {
 	check_sum[num_nodes-1] = 1;
 }
-
+/**
+ * @brief Test kernel
+ *  - for printing functionality 
+ * 
+ */
+__global__ void test(){
+    printf("Hi Cuda World");
+}
 
 /**
  * @brief Launching the master kernel with the params. from cpu.c
@@ -104,7 +111,8 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 
 	// cudaDeviceSynchronize();
 
-
+	test<<<1,1>>>();
+    cudaDeviceSynchronize();
 
 
 }
@@ -186,6 +194,7 @@ extern "C" void launch_matrix_multiply()
 	//
 	cudaEventRecord(start1, 0);
 	matrixAddition <<<numberOfBlocks, threadsPerBlock>>>(d_A, d_B, d_C, D);
+	
 	cudaEventRecord(stop1, 0);
 	cudaEventSynchronize(stop1);
 	cudaMemcpy(h_C1, d_C, size, cudaMemcpyDeviceToHost);

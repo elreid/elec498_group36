@@ -210,11 +210,11 @@ int main(int argc, char **argv)
     // matrix_add(h_A, h_B, h_C, size);
     cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
-    // launch_master(d_list_arr, CHECKSUM, NUMNODES);
+    launch_master(d_list_arr, CHECKSUM, NUMNODES);
 
-    printArray(CHECKSUM, NUMNODES);
+    // printArray(CHECKSUM, NUMNODES);
 
-    launch_matrix_multiply();
+    // launch_matrix_multiply();
 
     cudaFreeHost(h_list_arr);
 
