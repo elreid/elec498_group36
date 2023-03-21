@@ -9,7 +9,7 @@ Adam:
 - initialize array for time. 
 
 
-Beth:
+Beth: 
 
 Camila:
 
