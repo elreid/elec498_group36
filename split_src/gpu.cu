@@ -137,6 +137,8 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}
 
+		printf("\n");
+
 	}
 
 	//***
@@ -155,7 +157,6 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	}
 
 	printf("Flag: %d\n", flag);
-	printf("cudasuc: %d\n", cudaErrorMissingConfiguration);
 
 	printf("Finished launching master function\n");
 }
