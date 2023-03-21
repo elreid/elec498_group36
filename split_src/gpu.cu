@@ -69,10 +69,16 @@ __global__ void print_kernel() {
 	}
 }
 
-cudaStreamCallback_t callback_fn_test()
+void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	printf("Hello from callback");
-	return CUDA_SUCCESS;
+	// // Check status of GPU after stream operations are done
+    // checkCudaErrors(status);
+
+    // // Spawn new CPU worker thread and continue processing on the CPU
+    // cutStartThread(postprocess, data);
+
+	printf("Callback function called\n");
+
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
@@ -116,12 +122,8 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	for (int i = 0; i < num_nodes; i ++) 
 	{
 		print_kernel<<<1, 1, 0, streams[i]>>>();
-		cudaStreamAddCallback ( 
-			/*cudaStream_t stream*/				streams[i], 
-			/*cudaStreamCallback_t callback*/	callback_fn_test(), 
-			/*void* userData*/					NULL,
-			/*unsigned int  flags*/				0
-		);
+		heterogeneous_workload *workload = (heterogeneous_workload *) void_arg;
+		checkCudaErrors(cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0));
 	}
 
 	//***
