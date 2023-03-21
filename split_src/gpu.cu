@@ -130,8 +130,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	for (int i = 0; i < num_nodes; i++)
 	{
 		print_kernel<<<1, 1, 0, streams[i]>>>();
-		heterogeneous_workload *workload = (heterogeneous_workload *)void_arg;
-		checkCudaErrors(cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0));
+		cudaStreamAddCallback(streams[i], myStreamCallback, NULL, 0);
 	}
 
 	//***
