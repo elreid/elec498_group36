@@ -20,6 +20,6 @@ int* d_io;
 
 cudaMalloc((void**)&d_io, (NUMNODES*3*sizeof(int)));
 
-conversion(*head, *h_io, NUMNODES*3);
+conversion(*head, *h_io, NUMNODES);
 
 cudamemcpy(d_io,h_io, NUMNODES*3*sizeof(int), cudaMemcpyHostToDevice);
