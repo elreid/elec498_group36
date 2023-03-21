@@ -79,12 +79,7 @@ __global__ void print_kernel()
 
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	// // Check status of GPU after stream operations are done
-	// checkCudaErrors(status);
-
-	// // Spawn new CPU worker thread and continue processing on the CPU
-	// cutStartThread(postprocess, data);
-
+	
 	printf("Callback function called\n");
 
 }
