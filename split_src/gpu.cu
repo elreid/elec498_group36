@@ -70,12 +70,27 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	// 		check_sum[i] = 1;
 	// 	}
 	// }
-	dim3 threadsPerBlock(TPB, TPB);
-	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
+	// dim3 threadsPerBlock(TPB, TPB);
+	// dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
-	master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
-	printArray(check_sum, num_nodes);
-	check_sum[num_nodes-1] = 1;
+	// master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
+	// printArray(check_sum, num_nodes);
+	// check_sum[num_nodes-1] = 1;
+
+	cudaStrem_t stream_arr[num_nodes];
+
+   	for(int i=0;i<num_nodes;i++){
+
+		cudaStream_t stream
+		stream_arr[i] = stream;
+   		cudaStreamCreate(&stream)
+    	matrix_add<<<blocks,threads,0,stream>>>(d_a,d_b);
+    	
+  	}
+	
+	cudaDeviceSynchronize();
+
+
 }
 
 extern "C" void launch_matrix_multiply()
