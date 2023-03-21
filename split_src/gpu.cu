@@ -124,6 +124,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaStreamCreate(&streams[i]);
+		cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 	}
 
 	//***
@@ -131,7 +132,6 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	for (int i = 0; i < num_nodes; i++)
 	{
 		print_kernel<<<1, 1, 0, streams[i]>>>();
-		cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 	}
 	cudaDeviceSynchronize();
 
