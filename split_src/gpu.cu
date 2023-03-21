@@ -35,6 +35,11 @@ void hostAddition(int *A, int *B, int *C, int size)
 }//close hostaddition
 
 __global__ void matrixAddition(int *A, int *B, int *C, int size) {
+
+	if (threadIdx.x == 0){
+		printf("[MAT_ADD]: Ping from block %d, thread %d\n", blockIdx.x, threadIdx.x);
+	}
+
 	int row = blockIdx.y*blockDim.y + threadIdx.y;
 	int col = blockIdx.x*blockDim.x + threadIdx.x;
 
@@ -70,25 +75,30 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	// 		check_sum[i] = 1;
 	// 	}
 	// }
-	// dim3 threadsPerBlock(TPB, TPB);
-	// dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
+	dim3 threadsPerBlock(TPB, TPB);
+	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	// master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
 	// printArray(check_sum, num_nodes);
 	// check_sum[num_nodes-1] = 1;
 
-	cudaStrem_t stream_arr[num_nodes];
+	cudaStream_t stream_arr[num_nodes];
 
    	for(int i=0;i<num_nodes;i++){
 
 		cudaStream_t stream
+		
 		stream_arr[i] = stream;
-   		cudaStreamCreate(&stream)
-    	matrix_add<<<blocks,threads,0,stream>>>(d_a,d_b);
+   		
+		cudaStreamCreate(&stream)
+
+    	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
     	
   	}
-	
+
 	cudaDeviceSynchronize();
+
+
 
 
 }
