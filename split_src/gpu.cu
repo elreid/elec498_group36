@@ -11,7 +11,16 @@
 
 #define TPB 16 // num threads in a block
 #define D 256  // num of elements in a row/column
+#define N 16
+#define USECPSEC 1000000ULL
+#define NUMPARTITIONS 4
+#define NUMNODES 5
 
+
+// GLOBAL CHECKSUM VARIABLE
+int  CHECKSUM[NUMNODES] = {0};
+
+// GLOBAL FLAG VARIABLE 
 int flag = 0;
 
 /***
@@ -133,7 +142,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		
 		response = cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 		if(response != cudaSuccess){
-			printf("[ERROR]: Attaching callback function failed for stream %d\n");
+			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}
 
@@ -251,4 +260,16 @@ extern "C" void launch_matrix_multiply()
 	cpu_time_used = ((double)(end_test - start_test));
 	printf("(banya) norm mat add :\t\t%0.2f\n", cpu_time_used);
 	//
+}
+
+
+int main(int argc, char **argv)
+{
+	// launch_matrix_multiply();
+	int *d_list_arr;
+    cudaMalloc( (void**) &d_list_arr , size_list_arr );
+
+	launch_master(d_list_arr, CHECKSUM, NUMNODES);
+
+	return 0;
 }
