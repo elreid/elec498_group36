@@ -95,25 +95,22 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	 * Undefined number of streams 
 	*/
 
-	// cudaStream_t stream_arr[num_nodes];
+	cudaStream_t stream_arr[num_nodes];
 
-   	// for(int i=0;i<num_nodes;i++){
+   	for(int i=0;i<num_nodes;i++){
 
-	// 	cudaStream_t stream;
+		cudaStream_t stream;
 		
-	// 	stream_arr[i] = stream;
+		stream_arr[i] = stream;
    		
-	// 	cudaStreamCreate(&stream);
+		cudaStreamCreate(&stream);
 
-    // 	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
+    	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
     	
-  	// }
+  	}
 
-	// cudaDeviceSynchronize();
+	cudaDeviceSynchronize();
 
-	printf("About to run test kernel\n");
-	test<<<1,1>>>();
-    cudaDeviceSynchronize();
 
 }
 
