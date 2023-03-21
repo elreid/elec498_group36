@@ -64,7 +64,9 @@ __global__ void master_kernel(int * d_arr, int * check_sum, int num_nodes)
  * 
  */
 __global__ void test(){
-    printf("Hi Cuda World");
+	#if __CUDA_ARCH__ >= 200
+		printf("Hi Cuda World");
+	#endif
 }
 
 /**
