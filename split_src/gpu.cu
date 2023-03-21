@@ -12,6 +12,8 @@
 #define TPB 16 // num threads in a block
 #define D 256  // num of elements in a row/column
 
+int flag = 0;
+
 /***
  * @brief From "forvanya.txt"
  */
@@ -81,9 +83,10 @@ __global__ void print_kernel()
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 
-	int *check_sum = (int *)data;
+	int *check_sum = (int *) data ;
 	check_sum[0] = 1;
 	printf("Callback function called\n");
+	flag = 1;
 
 }
 /**
@@ -140,10 +143,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	}
 
 
-	for (int i = 0; i < num_nodes; i++)
-	{
-		printf("check_sum[%d]: %d\n", i, check_sum[i]);
-	}
+	printf("Flag: %d\n", flag);
 
 	printf("Finished launching master function\n");
 }
