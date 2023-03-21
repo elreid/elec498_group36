@@ -7,7 +7,7 @@
 #include "cuda_runtime.h"
 #include <cuda.h>
 #include "device_launch_parameters.h"
-#include "cuPrintf.cu"
+// #include "cuPrintf.cu"
 
 #define TPB 16 // num threads in a block
 #define D 256  // num of elements in a row/column
@@ -81,6 +81,8 @@ __global__ void print_kernel()
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 
+	int *check_sum = (int *)data;
+	check_sum[0] = 1;
 	cuPrintf("Callback function called\n");
 
 }
@@ -128,12 +130,19 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		print_kernel<<<1, 1, 0, streams[i]>>>();
 		cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 	}
+	cudaDeviceSynchronize();
 
 	//***
 	// @brief Destroying the streams
 	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaStreamDestroy(streams[i]);
+	}
+
+
+	for (int i = 0; i < num_nodes; i++)
+	{
+		printf("check_sum[%d]: %d\n", i, check_sum[i]);
 	}
 
 	printf("Finished launching master function\n");
