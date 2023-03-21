@@ -8,74 +8,82 @@
 #include <cuda.h>
 #include "device_launch_parameters.h"
 
-#define TPB 16	//num threads in a block
-#define D 256	//num of elements in a row/column
+#define TPB 16 // num threads in a block
+#define D 256  // num of elements in a row/column
 
 /***
  * @brief From "forvanya.txt"
-*/
+ */
 void printArray(int *array, int length)
 {
-    for (int i = 0; i < length; i++)
-    {
-        if (i % 3 == 0)
-            printf("\n");
-        printf("%08X ", array[i]);
-    }
-    printf("\n");
+	for (int i = 0; i < length; i++)
+	{
+		if (i % 3 == 0)
+			printf("\n");
+		printf("%08X ", array[i]);
+	}
+	printf("\n");
 }
 
-void hostAddition(int *A, int *B, int *C, int size) 
-{ 
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			C[i*size + j] = A[i*size + j] + B[i*size + j];
+void hostAddition(int *A, int *B, int *C, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			C[i * size + j] = A[i * size + j] + B[i * size + j];
 		}
 	}
-}//close hostaddition
+} // close hostaddition
 
-__global__ void matrixAddition(int *A, int *B, int *C, int size) {
+__global__ void matrixAddition(int *A, int *B, int *C, int size)
+{
 
-	if (threadIdx.x == 0){
+	if (threadIdx.x == 0)
+	{
 		printf("[MAT_ADD]: Ping from block %d, thread %d\n", blockIdx.x, threadIdx.x);
 	}
 
-	int row = blockIdx.y*blockDim.y + threadIdx.y;
-	int col = blockIdx.x*blockDim.x + threadIdx.x;
+	int row = blockIdx.y * blockDim.y + threadIdx.y;
+	int col = blockIdx.x * blockDim.x + threadIdx.x;
 
-	if (row < size && col < size) {
+	if (row < size && col < size)
+	{
 		int temp = row * size + col;
 		C[temp] = A[temp] + B[temp];
-	}//close if
+	} // close if
 }
 
 /**
  * @brief Master kernel for checksum flaggin
- * 
- * 
+ *
+ *
  */
-__global__ void master_kernel(int * d_arr, int * check_sum, int num_nodes)
+__global__ void master_kernel(int *d_arr, int *check_sum, int num_nodes)
 {
-	check_sum[num_nodes-1] = 1;
+	check_sum[num_nodes - 1] = 1;
 }
 /**
  * @brief Test kernel
- *  - for printing functionality 
- * 
+ *  - for printing functionality
+ *
  */
-__global__ void print_kernel() {
-	if (threadIdx.x == 0){
-		printf("Hello from block %d, thread %d\n", blockIdx.x, threadIdx.x);
+__global__ void print_kernel()
+{
+	int i = 0; 
+	i = i + 1;
+	for(int j = 0; j < 100; j++){
+		j = j+i;
 	}
 }
 
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 	// // Check status of GPU after stream operations are done
-    // checkCudaErrors(status);
+	// checkCudaErrors(status);
 
-    // // Spawn new CPU worker thread and continue processing on the CPU
-    // cutStartThread(postprocess, data);
+	// // Spawn new CPU worker thread and continue processing on the CPU
+	// cutStartThread(postprocess, data);
 
 	printf("Callback function called\n");
 
@@ -83,7 +91,7 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 /**
  * @brief Launching the master kernel with the params. from cpu.c
  */
-extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
+extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 {
 	// printf("d_arr: %X\n", d_arr);
 	// for(int i = 0; i < num_nodes*3; i++){
@@ -105,76 +113,76 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 
 	/***
 	 * @brief Creating streams for each node
-	 * Undefined number of streams 
-	*/
+	 * Undefined number of streams
+	 */
 
 	cudaStream_t streams[num_nodes];
 
 	//***
 	// @brief Creating streams for each node
-	for (int i = 0; i < num_nodes; i ++)
+	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaStreamCreate(&streams[i]);
 	}
 
 	//***
 	// @brief Wiring up the kernels to their specific streams
-	for (int i = 0; i < num_nodes; i ++) 
+	for (int i = 0; i < num_nodes; i++)
 	{
 		print_kernel<<<1, 1, 0, streams[i]>>>();
-		heterogeneous_workload *workload = (heterogeneous_workload *) void_arg;
+		heterogeneous_workload *workload = (heterogeneous_workload *)void_arg;
 		checkCudaErrors(cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0));
 	}
 
 	//***
-	// @brief Destroying the streams 
-	for (int i = 0; i < num_nodes; i ++)
+	// @brief Destroying the streams
+	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaStreamDestroy(streams[i]);
 	}
 
 	printf("Finished launching master function\n");
-
 }
-
 
 extern "C" void launch_matrix_multiply()
 {
-    /**
-     * @brief Doing the matrix multiplication
-     * 
-     */
-    time_t t;
-    cudaEvent_t start, stop, start1, stop1;
+	/**
+	 * @brief Doing the matrix multiplication
+	 *
+	 */
+	time_t t;
+	cudaEvent_t start, stop, start1, stop1;
 
-    cudaEventCreate(&start);
+	cudaEventCreate(&start);
 	cudaEventCreate(&start1);
 
-    cudaEventCreate(&stop);
+	cudaEventCreate(&stop);
 	cudaEventCreate(&stop1);
 
-    float gpu_time = 0.0f, gpu_time1 = 0.0;
+	float gpu_time = 0.0f, gpu_time1 = 0.0;
 
-    size_t size = D*D*sizeof(int);
+	size_t size = D * D * sizeof(int);
 
-    //create pointers for host related stuff, allocate the memory required
-	int *h_A 	= (int*)malloc(size);
-	int *h_B 	= (int*)malloc(size);
-	int *h_C 	= (int*)malloc(size);
-	int *h_C1 	= (int*)malloc(size);
+	// create pointers for host related stuff, allocate the memory required
+	int *h_A = (int *)malloc(size);
+	int *h_B = (int *)malloc(size);
+	int *h_C = (int *)malloc(size);
+	int *h_C1 = (int *)malloc(size);
 
-	//create pointers for device related stuff, allocate the memory required
+	// create pointers for device related stuff, allocate the memory required
 	int *d_A, *d_B, *d_C;
-	cudaMalloc((void**)&d_A, size);
-	cudaMalloc((void**)&d_B, size);
-	cudaMalloc((void**)&d_C, size);
+	cudaMalloc((void **)&d_A, size);
+	cudaMalloc((void **)&d_B, size);
+	cudaMalloc((void **)&d_C, size);
 
-	//seed that THICC BOI
+	// seed that THICC BOI
 	srand((unsigned)time(&t));
 
-    //send in values into the host 2 input matrices
-	for (int i = 0; i < D; i++) {
-		for (int j = 0; j < D; j++) {
+	// send in values into the host 2 input matrices
+	for (int i = 0; i < D; i++)
+	{
+		for (int j = 0; j < D; j++)
+		{
 			int rand1 = rand() % 10;
 			int rand2 = rand() % 10;
 			*(h_A + i * D + j) = rand1;
@@ -182,8 +190,8 @@ extern "C" void launch_matrix_multiply()
 		}
 	}
 
-    //run it back baby, host addition start, stop and method call
-	//general function timing // banya stuff 
+	// run it back baby, host addition start, stop and method call
+	// general function timing // banya stuff
 	clock_t start_test, end_test;
 	double cpu_time_used;
 	start_test = clock();
@@ -192,30 +200,30 @@ extern "C" void launch_matrix_multiply()
 	hostAddition(h_A, h_B, h_C, D);
 	cudaEventRecord(stop, 0);
 
-	//print out the results
+	// print out the results
 	cudaEventElapsedTime(&gpu_time, start, stop);
 	printf("host addition time:\t\t%0.2f\n", gpu_time);
 	// banya stuff
 	end_test = clock();
-    cpu_time_used = ((double) (end_test - start_test));
+	cpu_time_used = ((double)(end_test - start_test));
 	printf("(banya) h add time :\t\t%0.2f\n", cpu_time_used);
 	// banya stuff
 
-	//copy contents of host input matrices to the device
+	// copy contents of host input matrices to the device
 	cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
 	cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
 
-    //setup threads per block and number of blocks.
-	//should change D to just be strictly 16 later based on documentation ??...
+	// setup threads per block and number of blocks.
+	// should change D to just be strictly 16 later based on documentation ??...
 	dim3 threadsPerBlock(TPB, TPB);
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
-	//addition by individual threads:
+	// addition by individual threads:
 	start_test = clock();
 	//
 	cudaEventRecord(start1, 0);
-	matrixAddition <<<numberOfBlocks, threadsPerBlock>>>(d_A, d_B, d_C, D);
-	
+	matrixAddition<<<numberOfBlocks, threadsPerBlock>>>(d_A, d_B, d_C, D);
+
 	cudaEventRecord(stop1, 0);
 	cudaEventSynchronize(stop1);
 	cudaMemcpy(h_C1, d_C, size, cudaMemcpyDeviceToHost);
@@ -223,8 +231,7 @@ extern "C" void launch_matrix_multiply()
 	printf("normal matrix addition:\t\t%0.2f\n", gpu_time1);
 	//
 	end_test = clock();
-    cpu_time_used = ((double) (end_test - start_test));
+	cpu_time_used = ((double)(end_test - start_test));
 	printf("(banya) norm mat add :\t\t%0.2f\n", cpu_time_used);
 	//
-
 }
