@@ -69,6 +69,10 @@ __global__ void print_kernel() {
 	}
 }
 
+cudaStreamCallback_t callback_fn_test(void *userData)
+{
+	Printf("Hello from callback %d", userData);
+}
 /**
  * @brief Launching the master kernel with the params. from cpu.c
  */
@@ -99,16 +103,28 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 
 	cudaStream_t streams[num_nodes];
 
+	//***
+	// @brief Creating streams for each node
 	for (int i = 0; i < num_nodes; i ++)
 	{
 		cudaStreamCreate(&streams[i]);
 	}
 
+	//***
+	// @brief Wiring up the kernels to their specific streams
 	for (int i = 0; i < num_nodes; i ++) 
 	{
 		print_kernel<<<1, 1, 0, streams[i]>>>();
+		cudaStreamAddCallback ( 
+			/*cudaStream_t stream*/streams[i], 
+			/*cudaStreamCallback_t callback*/callback_fn_test(), 
+			/*void* userData*/i
+			/*unsigned int  flags*/
+		)
 	}
 
+	//***
+	// @brief Destroying the streams 
 	for (int i = 0; i < num_nodes; i ++)
 	{
 		cudaStreamDestroy(streams[i]);
@@ -117,6 +133,7 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	printf("Finished launching master function\n");
 
 }
+
 
 extern "C" void launch_matrix_multiply()
 {
