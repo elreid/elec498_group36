@@ -64,9 +64,7 @@ __global__ void master_kernel(int * d_arr, int * check_sum, int num_nodes)
  * 
  */
 __global__ void test(){
-	#if __CUDA_ARCH__ >= 200
-		printf("Hi Cuda World");
-	#endif
+	printf("Hi Cuda World");
 }
 
 /**
@@ -113,9 +111,9 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 
 	// cudaDeviceSynchronize();
 
+	printf("About to run test kernel\n");
 	test<<<1,1>>>();
     cudaDeviceSynchronize();
-
 
 }
 
