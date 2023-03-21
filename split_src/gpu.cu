@@ -123,8 +123,20 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	// @brief Creating streams for each node
 	for (int i = 0; i < num_nodes; i++)
 	{
-		cudaStreamCreate(&streams[i]);
-		cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
+		int res = 100;
+
+		res = cudaStreamCreate(&streams[i])
+		if(res != cudaSuccess){
+			printf("[ERROR]: Stream creation failed for stream %d\n", i);
+			printf("\t- CUDA error: %d", res);
+		}
+		
+		res = cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0)
+		if(res != cudaSuccess){
+			printf("[ERROR]: Attaching callback function failed for stream %d\n");
+			printf("\t- CUDA error: %d", res);
+		}
+		
 	}
 
 	//***
