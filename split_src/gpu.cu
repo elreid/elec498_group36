@@ -79,8 +79,8 @@ __global__ void print_kernel()
 
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	
-	printf("Callback function called\n");
+
+	cuPrintf("Callback function called\n");
 
 }
 /**
