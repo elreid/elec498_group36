@@ -2,8 +2,8 @@
 mpicc -c cpu.c -o cpu.o
 
 nvcc -c gpu.cu -o gpu.o
-nvcc -arch compute_20 gpu.cu
-nvcc -arch compute_20 printf.cu
+nvcc -arch=sm_30 gpu.cu
+nvcc -arch=compute_30 -c gpu.cu -o gpu.o
 
 mpicc cpu.o gpu.o -lcudart
 
