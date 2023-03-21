@@ -71,7 +71,8 @@ __global__ void print_kernel() {
 
 cudaStreamCallback_t callback_fn_test()
 {
-	Printf("Hello from callback");
+	printf("Hello from callback");
+	return CUDA_SUCCESS;
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
