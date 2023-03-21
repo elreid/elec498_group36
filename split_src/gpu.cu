@@ -7,6 +7,7 @@
 #include "cuda_runtime.h"
 #include <cuda.h>
 #include "device_launch_parameters.h"
+#include "cuPrintf.cu"
 
 #define TPB 16 // num threads in a block
 #define D 256  // num of elements in a row/column
