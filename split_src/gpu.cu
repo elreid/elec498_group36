@@ -80,7 +80,7 @@ __global__ void print_kernel()
 	}
 }
 
-void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
+void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 
 	int *check_sum = (int *) data ;
@@ -141,7 +141,6 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	{
 		cudaStreamDestroy(streams[i]);
 	}
-
 
 	printf("Flag: %d\n", flag);
 
