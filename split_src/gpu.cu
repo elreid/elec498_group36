@@ -83,7 +83,7 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 
 	int *check_sum = (int *)data;
 	check_sum[0] = 1;
-	cuPrintf("Callback function called\n");
+	printf("Callback function called\n");
 
 }
 /**
