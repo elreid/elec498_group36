@@ -63,8 +63,10 @@ __global__ void master_kernel(int * d_arr, int * check_sum, int num_nodes)
  *  - for printing functionality 
  * 
  */
-__global__ void test(){
-	printf("Hi Cuda World");
+__global__ void print_kernel() {
+	if (threadIdx.x == 0){
+		printf("Hello from block %d, thread %d\n", blockIdx.x, threadIdx.x);
+	}
 }
 
 /**
@@ -97,20 +99,22 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 
 	cudaStream_t stream_arr[num_nodes];
 
-   	for(int i=0;i<num_nodes;i++){
+	for (int i = 0; i < num_nodes; i ++)
+	{
+		checkCuda(cudaStreamCreate(&streams[i]));
+	}
 
-		cudaStream_t stream;
-		
-		stream_arr[i] = stream;
-   		
-		cudaStreamCreate(&stream);
+	for (int i = 0; i < num_nodes; i ++) 
+	{
+		print_kernel<<<1, 1, 0, stream_arr[i]>>>();
+	}
 
-    	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
-    	
-  	}
+	for (int i = 0; i < num_nodes; i ++)
+	{
+		checkCuda(cudaStreamDestroy(streams[i]));
+	}
 
-	cudaDeviceSynchronize();
-
+	printf("Finished launching master function\n");
 
 }
 
