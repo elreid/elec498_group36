@@ -143,6 +143,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	}
 
 	printf("Flag: %d\n", flag);
+	printf("cudasuc: %d\n", cudaSuccess);
 
 	printf("Finished launching master function\n");
 }
