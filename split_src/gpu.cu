@@ -97,21 +97,21 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 	 * Undefined number of streams 
 	*/
 
-	cudaStream_t stream_arr[num_nodes];
+	cudaStream_t streams[num_nodes];
 
 	for (int i = 0; i < num_nodes; i ++)
 	{
-		checkCuda(cudaStreamCreate(&streams[i]));
+		cudaStreamCreate(&streams[i]);
 	}
 
 	for (int i = 0; i < num_nodes; i ++) 
 	{
-		print_kernel<<<1, 1, 0, stream_arr[i]>>>();
+		print_kernel<<<1, 1, 0, streams[i]>>>();
 	}
 
 	for (int i = 0; i < num_nodes; i ++)
 	{
-		checkCuda(cudaStreamDestroy(streams[i]));
+		cudaStreamDestroy(streams[i]);
 	}
 
 	printf("Finished launching master function\n");
