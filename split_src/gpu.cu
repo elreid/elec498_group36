@@ -86,11 +86,11 @@ extern "C" void launch_master(int * d_arr, int * check_sum, int num_nodes)
 
    	for(int i=0;i<num_nodes;i++){
 
-		cudaStream_t stream
+		cudaStream_t stream;
 		
 		stream_arr[i] = stream;
    		
-		cudaStreamCreate(&stream)
+		cudaStreamCreate(&stream);
 
     	matrix_add <<< numberOfBlocks , TPB , 0, stream >>> (d_a,d_b);
     	
