@@ -10,23 +10,22 @@
 #include "device_launch_parameters.h"
 // #include "cuPrintf.cu"
 
-#define TPB 16 	// num threads in a block
-#define D 1024  // num of elements in a row/column
+#define TPB 16 // num threads in a block
+#define D 1024 // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-
 
 // GLOBAL CHECKSUM VARIABLE
 // int  CHECKSUM[NUMNODES] = {0};
 struct workload
 {
-	int * check_sum;
-    int id;
+	int *check_sum;
+	int id;
 	int numnodes;
 };
 
-// GLOBAL FLAG VARIABLE 
+// GLOBAL FLAG VARIABLE
 int flag = 0;
 
 // Global Time Variables
@@ -91,30 +90,32 @@ __global__ void master_kernel(int *d_arr, int *check_sum, int num_nodes)
  */
 __global__ void print_kernel()
 {
-	int i = 0; 
+	int i = 0;
 	i = i + 1;
-	for(int j = 0; j < 100; j++){
-		j = j+i;
+	for (int j = 0; j < 100; j++)
+	{
+		j = j + i;
 	}
 }
 
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 	printf("============================================\n");
-	if (status != cudaSuccess) printf("ERR: %s\n", cudaGetErrorString(status));
-	struct workload * workload = (struct workload *) data;
+	if (status != cudaSuccess)
+		printf("ERR: %s\n", cudaGetErrorString(status));
+	struct workload *workload = (struct workload *)data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("Workload ID: [%d] @ Event Address: [%08X]\n", workload->id, &event);
+	printf("Workload ID: [%d],  Event: [%08X]\n", workload->id, event);
 
 	printf("Checksum: ");
-	for (int i = 0; i < workload->numnodes; i++){
+	for (int i = 0; i < workload->numnodes; i++)
+	{
 		printf("%d ", workload->check_sum[i]);
 	}
 	printf(", Time Finished: %0.2f\n", (double)(clock() - start_test));
 	printf("============================================\n");
 	printf("\n\n");
-
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
@@ -128,20 +129,17 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	/***
-	 * Checking if the d_arr is passed over correctly 
-	*/
+	 * Checking if the d_arr is passed over correctly
+	 */
 	printf("[LAUNCH_MASTER]: Printing the data_arr\n");
 	printArray(data_arr, 3 * num_nodes);
 	printf("\n");
-
 
 	/***
 	 * @brief Creating streams for each node
 	 * Undefined number of streams
 	 */
 	cudaStream_t streams[num_nodes];
-
-
 
 	//***
 	// @brief Creating streams for each node
@@ -150,16 +148,42 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		cudaError_t response;
 
 		response = cudaStreamCreate(&streams[i]);
-		if(response != cudaSuccess){
+		if (response != cudaSuccess)
+		{
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
-		}else{
-			printf("Stream %d created @ [%08X]\n", i, &streams[i]);
 		}
+		else
+		{
+			printf("Stream %d created as [%08X]\n", i, streams[i]);
+		}
+
+		/**
+		 * @brief
+		 *  Creating the workload and attaching the callback function to the stream
+		 */
+		workload *workload = (struct workload *)malloc(sizeof(struct workload));
+
+		workload->check_sum = check_sum;
+		workload->numnodes = num_nodes;
+		workload->id = i;
+
+		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
+		if (response != cudaSuccess)
+		{
+			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
+			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+		}
+		else
+		{
+			printf("Callback function attached to stream %d, Object: [%08X]\n", i, streams[i]);
+		}
+		/**
+		 * End of cb_
+		 *
+		 */
 	}
 	printf("\n\n");
-
-
 
 	//***
 	// @brief Wiring up the kernels to their specific streams
@@ -193,42 +217,19 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		}
 		/**
 		 * @brief Construct a new cuda Memcpy Async object
-		 * 
+		 *
 		 */
 		// copy contents of host input matrices to the device
 		cudaMemcpyAsync(d_A, h_A, size, cudaMemcpyHostToDevice, streams[i]);
 		cudaMemcpyAsync(d_B, h_B, size, cudaMemcpyHostToDevice, streams[i]);
 		/**
 		 * @brief kernel inst.
-		 * 
+		 *
 		 * INSTANTIATE THE KERNEL
-		 * 
+		 *
 		 */
 		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
-
-		/**
-		 * @brief 
-		 *  Creating the workload and attaching the callback function to the stream
-		 */
-		cudaError_t response;
-		workload * workload = (struct workload *) malloc(sizeof(struct workload));
-		
-		workload->check_sum = check_sum;
-		workload->numnodes = num_nodes;
-		workload->id = i;
-
-		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
-		if(response != cudaSuccess){
-			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
-			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
-		}else{
-			printf("Callback function attached to stream %d @ [%08X]\n", i, &streams[i]);
-		}
-		/**
-		 * End of cb_
-		 * 
-		 */
 	}
 	printf("\n\n");
 
@@ -257,20 +258,20 @@ void launch_bogus()
 
 	cudaStream_t stream1, stream2, stream3;
 	cudaError_t response;
-	response = cudaStreamCreate(&stream1); 
+	response = cudaStreamCreate(&stream1);
 	printf("CUDA error: %s, %d\n", cudaGetErrorString(response), response);
-	response = cudaStreamCreate(&stream2); 
+	response = cudaStreamCreate(&stream2);
 	printf("CUDA error: %s, %d\n", cudaGetErrorString(response), response);
 	response = cudaStreamCreate(&stream3);
 	printf("CUDA error: %s, %d\n", cudaGetErrorString(response), response);
-	
-	for(int i=0;i<100;i++){
-		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream1>>>();
-		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream2>>>();
-		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream3>>>();
+
+	for (int i = 0; i < 100; i++)
+	{
+		print_kernel<<<numberOfBlocks, threadsPerBlock, 0, stream1>>>();
+		print_kernel<<<numberOfBlocks, threadsPerBlock, 0, stream2>>>();
+		print_kernel<<<numberOfBlocks, threadsPerBlock, 0, stream3>>>();
 		cudaDeviceSynchronize();
 	}
- 
 }
 
 extern "C" void launch_matrix_multiply()
@@ -364,7 +365,6 @@ extern "C" void launch_matrix_multiply()
 	printf("(banya) norm mat add :\t\t%0.2f\n", cpu_time_used);
 	//
 }
-
 
 // int main(int argc, char **argv)
 // {
