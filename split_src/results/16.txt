@@ -2,211 +2,61 @@ TESTING FOR BLOCK SIZE 16
 
 
 Test 1: N/A Optimizer
-[ERROR]: Stream creation failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
+ID: 0, Time Finished: 21431.00
+ID: 1, Time Finished: 21806.00
+ID: 2, Time Finished: 21812.00
+ID: 3, Time Finished: 21816.00
+ID: 4, Time Finished: 21820.00
+ID: 5, Time Finished: 21825.00
+ID: 6, Time Finished: 21829.00
+ID: 7, Time Finished: 21833.00
+ID: 8, Time Finished: 21838.00
+ID: 9, Time Finished: 21842.00
 
 Test 2: -G Optimizer
-[ERROR]: Stream creation failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
+ID: 0, Time Finished: 21336.00
+ID: 1, Time Finished: 21811.00
+ID: 2, Time Finished: 21817.00
+ID: 3, Time Finished: 21822.00
+ID: 4, Time Finished: 21826.00
+ID: 5, Time Finished: 21831.00
+ID: 6, Time Finished: 21836.00
+ID: 7, Time Finished: 21840.00
+ID: 8, Time Finished: 21845.00
+ID: 9, Time Finished: 21850.00
 
 Test 3: -O0 Optimizer
-[ERROR]: Stream creation failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
+ID: 0, Time Finished: 21888.00
+ID: 1, Time Finished: 22073.00
+ID: 2, Time Finished: 22076.00
+ID: 3, Time Finished: 22079.00
+ID: 4, Time Finished: 22081.00
+ID: 5, Time Finished: 22084.00
+ID: 6, Time Finished: 22086.00
+ID: 7, Time Finished: 22089.00
+ID: 8, Time Finished: 22092.00
+ID: 9, Time Finished: 22094.00
 
 Test 4: -O1 Optimizer
-[ERROR]: Stream creation failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
+ID: 0, Time Finished: 21210.00
+ID: 1, Time Finished: 21387.00
+ID: 2, Time Finished: 21391.00
+ID: 3, Time Finished: 21394.00
+ID: 4, Time Finished: 21396.00
+ID: 5, Time Finished: 21399.00
+ID: 6, Time Finished: 21401.00
+ID: 7, Time Finished: 21404.00
+ID: 8, Time Finished: 21407.00
+ID: 9, Time Finished: 21409.00
 
 Test 5: -O2 Optimizer
-[ERROR]: Stream creation failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 0
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 1
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 2
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 3
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 4
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 5
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 6
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 7
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 8
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Stream creation failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
-[ERROR]: Attaching callback function failed for stream 9
-	- CUDA error: no CUDA-capable device is detected
+ID: 0, Time Finished: 21944.00
+ID: 1, Time Finished: 22129.00
+ID: 2, Time Finished: 22133.00
+ID: 3, Time Finished: 22136.00
+ID: 4, Time Finished: 22138.00
+ID: 5, Time Finished: 22141.00
+ID: 6, Time Finished: 22144.00
+ID: 7, Time Finished: 22146.00
+ID: 8, Time Finished: 22149.00
+ID: 9, Time Finished: 22152.00

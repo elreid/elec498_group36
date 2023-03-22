@@ -1,0 +1,62 @@
+TESTING FOR BLOCK SIZE 1024
+
+
+Test 1: N/A Optimizer
+ID: 0, Time Finished: 20691.00
+ID: 1, Time Finished: 20930.00
+ID: 2, Time Finished: 20933.00
+ID: 3, Time Finished: 20936.00
+ID: 4, Time Finished: 20939.00
+ID: 5, Time Finished: 20941.00
+ID: 6, Time Finished: 20944.00
+ID: 7, Time Finished: 20946.00
+ID: 8, Time Finished: 20949.00
+ID: 9, Time Finished: 20951.00
+
+Test 2: -G Optimizer
+ID: 0, Time Finished: 24964.00
+ID: 1, Time Finished: 25183.00
+ID: 2, Time Finished: 25187.00
+ID: 3, Time Finished: 25189.00
+ID: 4, Time Finished: 25192.00
+ID: 5, Time Finished: 25195.00
+ID: 6, Time Finished: 25197.00
+ID: 7, Time Finished: 25200.00
+ID: 8, Time Finished: 25202.00
+ID: 9, Time Finished: 25205.00
+
+Test 3: -O0 Optimizer
+ID: 0, Time Finished: 13640.00
+ID: 1, Time Finished: 24738.00
+ID: 2, Time Finished: 24751.00
+ID: 3, Time Finished: 24762.00
+ID: 4, Time Finished: 24774.00
+ID: 5, Time Finished: 24787.00
+ID: 6, Time Finished: 24798.00
+ID: 7, Time Finished: 24810.00
+ID: 8, Time Finished: 24821.00
+ID: 9, Time Finished: 24832.00
+
+Test 4: -O1 Optimizer
+ID: 0, Time Finished: 21174.00
+ID: 1, Time Finished: 21448.00
+ID: 2, Time Finished: 21451.00
+ID: 3, Time Finished: 21454.00
+ID: 4, Time Finished: 21457.00
+ID: 5, Time Finished: 21459.00
+ID: 6, Time Finished: 21462.00
+ID: 7, Time Finished: 21464.00
+ID: 8, Time Finished: 21467.00
+ID: 9, Time Finished: 21470.00
+
+Test 5: -O2 Optimizer
+ID: 0, Time Finished: 22015.00
+ID: 1, Time Finished: 22282.00
+ID: 2, Time Finished: 22286.00
+ID: 3, Time Finished: 22289.00
+ID: 4, Time Finished: 22291.00
+ID: 5, Time Finished: 22294.00
+ID: 6, Time Finished: 22296.00
+ID: 7, Time Finished: 22299.00
+ID: 8, Time Finished: 22302.00
+ID: 9, Time Finished: 22305.00
