@@ -201,8 +201,8 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 
 
 		// copy contents of host input matrices to the device
-		cudaMemcpyAsync(d_A, h_A, size, cudaMemcpyHostToDevice, stream[i]);
-		cudaMemcpyAsync(d_B, h_B, size, cudaMemcpyHostToDevice, stream[i]);
+		cudaMemcpyAsync(d_A, h_A, size, cudaMemcpyHostToDevice, streams[i]);
+		cudaMemcpyAsync(d_B, h_B, size, cudaMemcpyHostToDevice, streams[i]);
 
 
 		/**
