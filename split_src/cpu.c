@@ -11,7 +11,7 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-#define NUMNODES 10
+#define NUMNODES 5
 // #define TPB 16	//num threads in a block
 // #define D 256
 
@@ -210,7 +210,11 @@ int main(int argc, char **argv)
 
     launch_master(h_list_arr, CHECKSUM, NUMNODES);
 
+    printf("CHECKSUM in cpu.c: \n");
     printArray(CHECKSUM, NUMNODES);
+
+    printf("h_list_arr in cpu.c: \n");
+    printArray(h_list_arr, NUMNODES * 3);
 
     // launch_matrix_multiply();
 

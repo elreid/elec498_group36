@@ -11,7 +11,7 @@
 // #include "cuPrintf.cu"
 
 #define TPB 16 // num threads in a block
-#define D 1024 // num of elements in a row/column
+#define D 8192 // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
@@ -20,6 +20,7 @@
 // int  CHECKSUM[NUMNODES] = {0};
 struct workload
 {
+	int *data_arr
 	int *check_sum;
 	int id;
 	int numnodes;
@@ -101,12 +102,17 @@ __global__ void print_kernel()
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 	printf("============================================\n");
-	if (status != cudaSuccess)
-		printf("ERR: %s\n", cudaGetErrorString(status));
+	
 	struct workload *workload = (struct workload *)data;
-	workload->check_sum[workload->id] = 1;
 
 	printf("Workload ID: [%d],  Event: [%08X]\n", workload->id, event);
+	if (status != cudaSuccess)
+		printf("ERR: %s\n", cudaGetErrorString(status));
+	
+	
+	workload->check_sum[workload->id] = 1;
+
+	workload->data_arr[workload->id * 3] = 0xACCED000 | workload->id;
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++)
@@ -164,6 +170,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		 */
 		workload *workload = (struct workload *)malloc(sizeof(struct workload));
 
+		workload->data_arr = data_arr;
 		workload->check_sum = check_sum;
 		workload->numnodes = num_nodes;
 		workload->id = i;
