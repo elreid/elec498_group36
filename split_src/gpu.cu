@@ -100,7 +100,6 @@ __global__ void print_kernel()
 
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	printf("-\n");
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
@@ -111,7 +110,7 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 		printf("%d ", workload->check_sum[i]);
 	}
 	printf(", Time Finished: %0.2f", (double)clock());
-	printf("\n-\n");
+	printf("\n\n");
 
 }
 /**
@@ -214,14 +213,13 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 
 	}
-	cudaDeviceSynchronize();
 
 	//***
 	// @brief Destroying the streams
-	for (int i = 0; i < num_nodes; i++)
-	{
-		cudaStreamDestroy(streams[i]);
-	}
+	// for (int i = 0; i < num_nodes; i++)
+	// {
+	// 	cudaStreamDestroy(streams[i]);
+	// }
 
 	// printf("Checksum: ");
 	// for (int i = 0; i < num_nodes; i++){
