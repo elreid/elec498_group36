@@ -20,7 +20,7 @@
 // int  CHECKSUM[NUMNODES] = {0};
 struct workload
 {
-	int *data_arr
+	int *data_arr;
 	int *check_sum;
 	int id;
 	int numnodes;
