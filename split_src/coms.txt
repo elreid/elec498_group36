@@ -13,3 +13,6 @@ chmod +x run.sh
 
 mpicc -I/usr/local/cuda/include -L/usr/local/cuda/lib64 cpu.c -lcudart -o cpu.o
 mpirun -np 4 a.out
+
+salloc --nodes=1 --gpus-per-node=1 --account=def-regrant
+exit
