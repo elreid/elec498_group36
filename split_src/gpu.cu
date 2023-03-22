@@ -60,10 +60,10 @@ void hostAddition(int *A, int *B, int *C, int size)
 
 __global__ void matrixAddition(int *A, int *B, int *C, int size)
 {
-	// if (threadIdx.x == 0)
-	// {
-	// 	printf("[MAT_ADD]: Ping from block %d, thread %d\n", blockIdx.x, threadIdx.x);
-	// }
+	if (threadIdx.x == 0)
+	{
+		printf("[MAT_ADD]: Ping from block %d, thread %d\n", blockIdx.x, threadIdx.x);
+	}
 
 	int row = blockIdx.y * blockDim.y + threadIdx.y;
 	int col = blockIdx.x * blockDim.x + threadIdx.x;
@@ -109,10 +109,11 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 	if (status != cudaSuccess)
 		printf("ERR: %s\n", cudaGetErrorString(status));
 	
-	
+
 	workload->check_sum[workload->id] = 1;
 
 	workload->data_arr[workload->id * 3] = 0xACCED000 | workload->id;
+
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++)
