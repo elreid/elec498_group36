@@ -121,7 +121,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	{
 		cudaError_t response;
 		printf("%d\n", response);
-		
+
 		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
@@ -156,6 +156,23 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	printf("Flag: %d\n", flag);
 
 	printf("Finished launching master function\n");
+}
+
+extern "C" void launch_bogus()
+{
+	dim3 threadsPerBlock(TPB, TPB);
+	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
+
+	cudaStream_t stream1, stream2, stream3;
+	cudaStreamCreate(&stream1); cudaStreamCreate(&stream2); cudaStreamCreate(&stream3);
+	
+	for(int i=0;i<100;i++){
+		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream1>>>();
+		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream2>>>();
+		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream3>>>();
+		cudaDeviceSynchronize();
+	}
+ 
 }
 
 extern "C" void launch_matrix_multiply()
