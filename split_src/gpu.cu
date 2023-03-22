@@ -29,6 +29,10 @@ struct workload
 // GLOBAL FLAG VARIABLE 
 int flag = 0;
 
+// Global Time Variables
+time_t t;
+clock_t start_test, end_test;
+
 /***
  * @brief From "forvanya.txt"
  */
@@ -97,14 +101,21 @@ __global__ void print_kernel()
 
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
+
+
+
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
+
+	printf("[ Workload ID: %d ] ", workload->id);
 
 	printf("Checksum: ");
 	for (int i = 0; i < NUMNODES; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
-
+	end_test = clock();
+	cpu_time_used = ((double)(end_test - start_test));
+	printf(", Time Finished: %d", cpu_time_used);
 
 	printf("\n");
 }
@@ -113,6 +124,8 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
  */
 extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 {
+	srand((unsigned)time(&t));
+	start_test = clock();
 
 	dim3 threadsPerBlock(TPB, TPB);
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
@@ -144,7 +157,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("Stream %d created\n", i);
 		}
 		
-		
+
 		workload->id = i;
 
 		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
