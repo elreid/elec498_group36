@@ -104,13 +104,13 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("Workload ID: %d @ Stream Addr: [%08X]\n", workload->id, &event);
+	printf("Workload ID: %d @ Event Address: [%08X]\n", workload->id, &event);
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
-	printf(", Time Finished: %0.2f", (double)clock());
+	printf(", Time Finished: %0.2f", (double)(clock() - start_test));
 	printf("\n\n");
 
 }
@@ -147,7 +147,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 	{
 		cudaError_t response;
 
-		response = cudaStreamCreate(streams[i]);
+		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
