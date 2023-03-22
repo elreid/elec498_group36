@@ -22,7 +22,7 @@
 // int  CHECKSUM[NUMNODES] = {0};
 struct workload
 {
-	int * checksum;
+	int * check_sum;
     int id;
 };
 
