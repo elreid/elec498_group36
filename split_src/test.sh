@@ -1,4 +1,10 @@
 #!/bin/bash
+if [ -z "$1" ]; then
+    echo "Give arg pls"
+    return 1
+fi
+
+
 module load openmpi cuda
 mpicc -c cpu.c -o cpu.o
 
