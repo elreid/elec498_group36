@@ -276,7 +276,9 @@ int main(int argc, char **argv)
 	int *d_list_arr;
     cudaMalloc( (void**) &d_list_arr , size_list_arr );
 
-	launch_master(d_list_arr, CHECKSUM, NUMNODES);
+	// launch_master(d_list_arr, CHECKSUM, NUMNODES);
+
+	launch_bogus();
 
 	return 0;
 }
