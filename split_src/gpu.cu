@@ -5,6 +5,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include "cuda_runtime.h"
+#include "cuda_runtime_api.h"
 #include <cuda.h>
 #include "device_launch_parameters.h"
 // #include "cuPrintf.cu"
@@ -103,23 +104,9 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
  */
 extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 {
-	// printf("d_arr: %X\n", d_arr);
-	// for(int i = 0; i < num_nodes*3; i++){
-	// 	printf("d_arr[%d]: %d\n", i, d_arr[i]);
-	// }
-	// for(int i = 0; i < num_nodes; i++){
-	// 	printf("check_sum[%d]: %d\n", i, check_sum[i]);
-	// 	if (i==3){
-	// 		check_sum[i] = 1;
-	// 	}
-	// }
 
 	dim3 threadsPerBlock(TPB, TPB);
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
-
-	// master_kernel <<<numberOfBlocks, threadsPerBlock>>>(d_arr, check_sum, num_nodes);
-	// printArray(check_sum, num_nodes);
-	// check_sum[num_nodes-1] = 1;
 
 	/***
 	 * @brief Creating streams for each node
