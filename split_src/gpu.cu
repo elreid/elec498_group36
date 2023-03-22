@@ -11,7 +11,7 @@
 // #include "cuPrintf.cu"
 
 #define TPB 16 // num threads in a block
-#define D 256  // num of elements in a row/column
+#define D 1024  // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
