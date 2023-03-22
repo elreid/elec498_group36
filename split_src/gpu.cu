@@ -140,27 +140,12 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	{
 		cudaError_t response;
 
-		workload * workload = (struct workload *) malloc(sizeof(struct workload));
-		workload->check_sum = check_sum;
-		workload->numnodes = num_nodes;
-
 		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}else{
 			printf("Stream %d created\n", i);
-		}
-		
-
-		workload->id = i;
-
-		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
-		if(response != cudaSuccess){
-			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
-			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
-		}else{
-			printf("Callback function attached to stream %d\n", i);
 		}
 
 		printf("\n");
@@ -212,7 +197,30 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		matrixAddition<<<numberOfBlocks, threadsPerBlock, 0, streams[i]>>>(d_A, d_B, d_C, D);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 
+		/**
+		 * @brief 
+		 *  Creating the workload and attaching the callback function to the stream
+		 */
+		workload * workload = (struct workload *) malloc(sizeof(struct workload));
+		workload->check_sum = check_sum;
+		workload->numnodes = num_nodes;
+
+		workload->id = i;
+		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
+		if(response != cudaSuccess){
+			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
+			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+		}else{
+			printf("Callback function attached to stream %d\n", i);
+		}
+		/**
+		 * End of cb_
+		 * 
+		 */
+
 	}
+
+	// cudaDeviceSynchronize();
 
 	//***
 	// @brief Destroying the streams
