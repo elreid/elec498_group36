@@ -113,9 +113,7 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 	for (int i = 0; i < NUMNODES; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
-	end_test = clock();
-	cpu_time_used = ((double)(end_test - start_test));
-	printf(", Time Finished: %d", cpu_time_used);
+	printf(", Time Finished: %d", 	((double)(clock() - start_test)) );
 
 	printf("\n");
 }
