@@ -104,7 +104,6 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 	for (int i = 0; i < NUMNODES; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
-	printf("\n");
 
 
 	printf("\n");
@@ -123,17 +122,19 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	 * Undefined number of streams
 	 */
 
-	workload * workload = (struct workload *) malloc(sizeof(struct workload));
 
 	cudaStream_t streams[num_nodes];
 
-	workload->check_sum = check_sum;
+
 
 	//***
 	// @brief Creating streams for each node
 	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaError_t response;
+
+		workload * workload = (struct workload *) malloc(sizeof(struct workload));
+		workload->check_sum = check_sum;
 
 		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
@@ -143,7 +144,9 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("Stream %d created\n", i);
 		}
 		
+		
 		workload->id = i;
+
 		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
