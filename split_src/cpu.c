@@ -11,7 +11,7 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-#define NUMNODES 5
+#define NUMNODES 10
 // #define TPB 16	//num threads in a block
 // #define D 256
 

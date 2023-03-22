@@ -14,7 +14,7 @@
 #define D 16 // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
-#define NUMPARTITIONS 4
+// #define NUMPARTITIONS 10
 
 // #define NUMNODES 5
 
