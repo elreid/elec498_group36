@@ -11,7 +11,7 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-#define NUMNODES 25
+#define NUMNODES 250
 // #define TPB 16	//num threads in a block
 // #define D 256
 
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
     // matrix_add(h_A, h_B, h_C, size);
     cudaMemcpy(d_list_arr, h_list_arr, size_list_arr, cudaMemcpyHostToDevice);
 
-    launch_master(h_list_arr, CHECKSUM, NUMNODES);
+    // launch_master(h_list_arr, CHECKSUM, NUMNODES);
 
     // printf("CHECKSUM in cpu.c: \n");
     // printArray(CHECKSUM, NUMNODES);
