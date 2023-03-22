@@ -11,7 +11,7 @@
 // #include "cuPrintf.cu"
 
 #define TPB 16 // num threads in a block
-#define D 1024 // num of elements in a row/column
+#define D 16 // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
@@ -20,6 +20,7 @@
 
 // GLOBAL CHECKSUM VARIABLE
 // int  CHECKSUM[NUMNODES] = {0};
+
 
 struct workload
 {
@@ -63,10 +64,10 @@ void hostAddition(int *A, int *B, int *C, int size)
 
 __global__ void matrixAddition(int *A, int *B, int *C, int size)
 {
-	if (threadIdx.x == 0)
-	{
-		printf("[MAT_ADD]: Ping from block %d, thread %d\n", blockIdx.x, threadIdx.x);
-	}
+	// if (threadIdx.x == 0)
+	// {
+	// 	printf("[MAT_ADD]: Ping from block %d, thread %d\n", blockIdx.x, threadIdx.x);
+	// }
 
 	int row = blockIdx.y * blockDim.y + threadIdx.y;
 	int col = blockIdx.x * blockDim.x + threadIdx.x;
@@ -105,16 +106,18 @@ __global__ void print_kernel()
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 	// printf("============================================\n");
-
+	
 	struct workload *workload = (struct workload *)data;
 
 	// printf("Workload ID: [%d],  Event: [%08X] : ", workload->id, event);
 	if (status != cudaSuccess)
 		printf("ERR: %s\n", cudaGetErrorString(status));
+	
 
 	workload->check_sum[workload->id] = 1;
 
 	workload->data_arr[workload->id * 3] = 0xACCED000 | workload->id;
+
 
 	// printf("Checksum: ");
 	// for (int i = 0; i < workload->numnodes; i++)
@@ -165,6 +168,32 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		// {
 		// 	printf("Stream %d created as [%08X]\n", i, streams[i]);
 		// }
+
+		/**
+		 * @brief
+		 *  Creating the workload and attaching the callback function to the stream
+		 */
+		workload *workload = (struct workload *)malloc(sizeof(struct workload));
+
+		workload->data_arr = data_arr;
+		workload->check_sum = check_sum;
+		workload->numnodes = num_nodes;
+		workload->id = i;
+
+		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
+		if (response != cudaSuccess)
+		{
+			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
+			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+		}
+		// else
+		// {
+		// 	printf("Callback function attached to stream %d, Object: [%08X]\n", i, streams[i]);
+		// }
+		/**
+		 * End of cb_
+		 *
+		 */
 	}
 	// printf("\n\n");
 
@@ -209,7 +238,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		 * @brief kernel inst.
 		 *
 		 * INSTANTIATE THE KERNEL
-		 * - sads
+		 * - sads 
 		 *
 		 */
 		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
@@ -218,32 +247,6 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 	// printf("\n\n");
 
 	cudaDeviceSynchronize();
-
-	/**
-	 * @brief
-	 *  Creating the workload and attaching the callback function to the stream
-	 */
-	workload *workload = (struct workload *)malloc(sizeof(struct workload));
-
-	workload->data_arr = data_arr;
-	workload->check_sum = check_sum;
-	workload->numnodes = num_nodes;
-	workload->id = i;
-
-	response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
-	if (response != cudaSuccess)
-	{
-		printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
-		printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
-	}
-	// else
-	// {
-	// 	printf("Callback function attached to stream %d, Object: [%08X]\n", i, streams[i]);
-	// }
-	/**
-	 * End of cb_
-	 *
-	 */
 
 	//***
 	// @brief Destroying the streams
@@ -304,10 +307,10 @@ extern "C" void launch_matrix_multiply()
 	size_t size = D * D * sizeof(int);
 
 	// create pointers for host related stuff, allocate the memory required
-	int *h_A = (int *)malloc(size);
-	int *h_B = (int *)malloc(size);
-	int *h_C = (int *)malloc(size);
-	int *h_C1 = (int *)malloc(size);
+	int *h_A 	= (int *)malloc(size);
+	int *h_B 	= (int *)malloc(size);
+	int *h_C 	= (int *)malloc(size);
+	int *h_C1 	= (int *)malloc(size);
 
 	// create pointers for device related stuff, allocate the memory required
 	int *d_A, *d_B, *d_C;
