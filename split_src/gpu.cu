@@ -119,8 +119,9 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	// @brief Creating streams for each node
 	for (int i = 0; i < num_nodes; i++)
 	{
-		cudaError_t response = cudaSuccess;
-
+		cudaError_t response;
+		printf("%d\n", response);
+		
 		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
