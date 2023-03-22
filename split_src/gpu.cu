@@ -10,7 +10,7 @@
 #include "device_launch_parameters.h"
 // #include "cuPrintf.cu"
 
-#define TPB 16 // num threads in a block
+#define TPB 16 	// num threads in a block
 #define D 1024  // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
@@ -105,13 +105,13 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("Workload ID: %d @ Event Address: [%08X]\n", workload->id, &event);
+	printf("Workload ID: [%d] @ Event Address: [%08X]\n", workload->id, &event);
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
-	printf(", Time Finished: %0.2f", (double)(clock() - start_test));
+	printf(", Time Finished: %0.2f\n", (double)(clock() - start_test));
 	printf("============================================\n");
 	printf("\n\n");
 
@@ -204,7 +204,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		 * INSTANTIATE THE KERNEL
 		 * 
 		 */
-		matrixAddition<<<numberOfBlocks, threadsPerBlock, 0, streams[i]>>>(d_A, d_B, d_C, D);
+		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 
 		/**
