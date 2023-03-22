@@ -12,3 +12,6 @@ if module load openmpi cuda; then
         echo -e "\n == CPU compilation failed == \n\n"
     fi
 fi
+
+# nvcc gpu.cu
+# ./a.out

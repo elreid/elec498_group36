@@ -166,11 +166,11 @@ void launch_bogus()
 	cudaStream_t stream1, stream2, stream3;
 	cudaError_t response;
 	response = cudaStreamCreate(&stream1); 
-	printf("CUDA error: %s\n", cudaGetErrorString(response));
+	printf("CUDA error: %s\n, %d", cudaGetErrorString(response), response);
 	response = cudaStreamCreate(&stream2); 
-	printf("CUDA error: %s\n", cudaGetErrorString(response));
+	printf("CUDA error: %s\n, %d", cudaGetErrorString(response), response);
 	response = cudaStreamCreate(&stream3);
-	printf("CUDA error: %s\n", cudaGetErrorString(response));
+	printf("CUDA error: %s\n, %d", cudaGetErrorString(response), response);
 	
 	for(int i=0;i<100;i++){
 		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream1>>>();
