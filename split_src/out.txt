@@ -1,0 +1,65 @@
+Hello World from process 0 of 1: Provides = 3
+[LAUNCH_MASTER]: Printing the data_arr
+
+00000000 00000100 00000010 
+00000001 00000100 00000010 
+00000002 00000100 00000010 
+00000003 00000100 00000010 
+00000004 00000100 00000010 
+
+Stream 0 created as [02976970]
+Callback function attached to stream 0, Object: [02976970]
+Stream 1 created as [02A1D4B0]
+Callback function attached to stream 1, Object: [02A1D4B0]
+Stream 2 created as [02A2BD50]
+Callback function attached to stream 2, Object: [02A2BD50]
+Stream 3 created as [02A2C0E0]
+Callback function attached to stream 3, Object: [02A2C0E0]
+Stream 4 created as [02A2C470]
+Callback function attached to stream 4, Object: [02A2C470]
+
+
+============================================
+Workload ID: [0],  Event: [02976970]
+Checksum: 1 0 0 0 0 , Time Finished: 20904.00
+============================================
+
+
+============================================
+Workload ID: [1],  Event: [02A1D4B0]
+Checksum: 1 1 0 0 0 , Time Finished: 21042.00
+============================================
+
+
+============================================
+Workload ID: [2],  Event: [02A2BD50]
+Checksum: 1 1 1 0 0 , Time Finished: 21178.00
+============================================
+
+
+============================================
+Workload ID: [3],  Event: [02A2C0E0]
+Checksum: 1 1 1 1 0 , Time Finished: 21325.00
+============================================
+
+
+============================================
+Workload ID: [4],  Event: [02A2C470]
+Checksum: 1 1 1 1 1 , Time Finished: 21450.00
+============================================
+
+
+
+
+Finished launching master function
+CHECKSUM in cpu.c: 
+
+00000001 00000001 00000001 
+00000001 00000001 
+h_list_arr in cpu.c: 
+
+ACCED000 00000100 00000010 
+ACCED001 00000100 00000010 
+ACCED002 00000100 00000010 
+ACCED003 00000100 00000010 
+ACCED004 00000100 00000010 
