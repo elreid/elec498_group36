@@ -97,10 +97,11 @@ __global__ void print_kernel()
 
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	printf(event->id);
+	unsigned long long * streamId;
+	cudaStreamGetId(event, streamId);
 	int *check_sum = (int *) data ;
 	check_sum[0] = 1;
-	printf("Callback function called\n");
+	printf("Callback function called for stream id : %d\n", *streamId);
 	flag = 1;
 
 }
