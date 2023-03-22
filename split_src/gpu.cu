@@ -235,7 +235,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		 * INSTANTIATE THE KERNEL
 		 *
 		 */
-		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
+		matrixAddition<<<1, 1, streams[i]>>>(d_A, d_B, d_C, D);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 	}
 	printf("\n\n");
