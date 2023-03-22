@@ -164,10 +164,10 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}
-		else
-		{
-			printf("Stream %d created as [%08X]\n", i, streams[i]);
-		}
+		// else
+		// {
+		// 	printf("Stream %d created as [%08X]\n", i, streams[i]);
+		// }
 
 		/**
 		 * @brief
@@ -186,16 +186,16 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}
-		else
-		{
-			printf("Callback function attached to stream %d, Object: [%08X]\n", i, streams[i]);
-		}
+		// else
+		// {
+		// 	printf("Callback function attached to stream %d, Object: [%08X]\n", i, streams[i]);
+		// }
 		/**
 		 * End of cb_
 		 *
 		 */
 	}
-	printf("\n\n");
+	// printf("\n\n");
 
 	//***
 	// @brief Wiring up the kernels to their specific streams
@@ -244,7 +244,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 	}
-	printf("\n\n");
+	// printf("\n\n");
 
 	cudaDeviceSynchronize();
 
@@ -261,7 +261,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 	// }
 	// printf("\n");
 
-	printf("Finished launching master function\n");
+	// printf("Finished launching master function\n");
 }
 
 void launch_bogus()

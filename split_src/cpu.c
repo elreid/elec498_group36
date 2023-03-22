@@ -157,8 +157,8 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size_Of_Cluster);
     MPI_Comm_rank(MPI_COMM_WORLD, &process_Rank);
 
-    printf("Hello World from process %d of %d: ", process_Rank, size_Of_Cluster);
-    printf("Provides = %d\n", provided);
+    // printf("Hello World from process %d of %d: ", process_Rank, size_Of_Cluster);
+    // printf("Provides = %d\n", provided);
 
     if (process_Rank == 0)
     {
@@ -210,11 +210,11 @@ int main(int argc, char **argv)
 
     launch_master(h_list_arr, CHECKSUM, NUMNODES);
 
-    printf("CHECKSUM in cpu.c: \n");
-    printArray(CHECKSUM, NUMNODES);
+    // printf("CHECKSUM in cpu.c: \n");
+    // printArray(CHECKSUM, NUMNODES);
 
-    printf("h_list_arr in cpu.c: \n");
-    printArray(h_list_arr, NUMNODES * 3);
+    // printf("h_list_arr in cpu.c: \n");
+    // printArray(h_list_arr, NUMNODES * 3);
 
     // launch_matrix_multiply();
 
