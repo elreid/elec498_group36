@@ -11,7 +11,7 @@
 // #include "cuPrintf.cu"
 
 #define TPB 16 // num threads in a block
-#define D 1024  // num of elements in a row/column
+#define D 8192  // num of elements in a row/column
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
@@ -111,7 +111,7 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 		printf("%d ", workload->check_sum[i]);
 	}
 	printf(", Time Finished: %0.2f", (double)clock());
-	printf("-\n");
+	printf("\n-");
 
 	printf("\n\n");
 }
