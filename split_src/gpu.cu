@@ -97,12 +97,12 @@ __global__ void print_kernel()
 
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	printf("Event: %d, Status: %d, Data: %d")
-	int *check_sum = (int *) data ;
+	printf("Event: %d", event);
+	int *check_sum = (int *) data;
 	check_sum[0] = 1;
-	printf("Callback function called for stream id : %d\n", *streamId);
+	printf("Callback function called for stream id");
 	flag = 1;
-
+	printf("\n");
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
