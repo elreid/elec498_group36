@@ -162,7 +162,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		if (response != cudaSuccess)
 		{
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
-			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+			// printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}
 		// else
 		// {
@@ -184,7 +184,7 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		if (response != cudaSuccess)
 		{
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
-			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+			// printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}
 		// else
 		// {
@@ -245,10 +245,10 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		start_test = clock();
 
 		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
-		
+
 		end_test = clock();
 		cpu_time_used = ((double)(end_test - start_test));
-		printf("i = %d, mat add time :\t\t%0.2f\n", i, cpu_time_used);
+		// printf("i = %d, mat add time :\t\t%0.2f\n", i, cpu_time_used);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 	}
 	// printf("\n\n");
