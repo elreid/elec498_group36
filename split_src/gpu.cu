@@ -20,7 +20,7 @@
 
 // GLOBAL CHECKSUM VARIABLE
 // int  CHECKSUM[NUMNODES] = {0};
-struct workload
+struct myWorkload
 {
 	int * check_sum;
     int id;
@@ -97,12 +97,12 @@ __global__ void print_kernel()
 
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data, int i)
 {
-	struct workload * workload = (struct workload *) data;
-	workload->check_sum[workload->id] = 1;
+	struct myWorkload * workloadObject = (struct myWorkload *) data;
+	workloadObject->check_sum[workloadObject->id] = 1;
 
 	printf("Checksum: ");
 	for (int i = 0; i < NUMNODES; i++){
-		printf("%d ", workload->check_sum[i]);
+		printf("%d ", workloadObject->check_sum[i]);
 	}
 	printf("\n");
 
@@ -123,11 +123,11 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	 * Undefined number of streams
 	 */
 
-	workload * workload = (struct workload *) malloc(sizeof(struct workload));
+	myWorkload * workloadObject = (struct myWorkload *) malloc(sizeof(struct myWorkload));
 
 	cudaStream_t streams[num_nodes];
 
-	workload->check_sum = check_sum;
+	workloadObject->check_sum = check_sum;
 
 	//***
 	// @brief Creating streams for each node
@@ -143,8 +143,8 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("Stream %d created\n", i);
 		}
 		
-		workload->id = i;
-		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
+		workloadObject->id = i;
+		response = cudaStreamAddCallback(streams[i], myStreamCallback, workloadObject, 0);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
