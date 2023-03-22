@@ -102,7 +102,7 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data, int i)
 
 	printf("Checksum: ");
 	for (int i = 0; i < NUMNODES; i++){
-		printf("%d ", workload->checksum[i]);
+		printf("%d ", workload->check_sum[i]);
 	}
 	printf("\n");
 
@@ -127,7 +127,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 
 	cudaStream_t streams[num_nodes];
 
-	workload->checksum = check_sum;
+	workload->check_sum = check_sum;
 
 	//***
 	// @brief Creating streams for each node
