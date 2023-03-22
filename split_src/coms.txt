@@ -16,3 +16,15 @@ mpirun -np 4 a.out
 
 salloc --nodes=1 --gpus-per-node=1 --account=def-regrant
 exit
+
+
+module load openmpi cuda
+mpicc -c cpu.c -o cpu.o
+
+nvcc -G -c gpu.cu -o gpu.o
+nvcc -O0 -c gpu.cu -o gpu.o
+nvcc -O1 -c gpu.cu -o gpu.o
+nvcc -O2 -c gpu.cu -o gpu.o
+
+mpicc cpu.o gpu.o -lcudart
+./a.out 
