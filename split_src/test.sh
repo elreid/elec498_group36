@@ -4,9 +4,10 @@ if [ -z "$1" ]; then
     return 1
 fi
 
-
 module load openmpi cuda
 mpicc -c cpu.c -o cpu.o
+
+echo "TESTING FOR BLOCK SIZE $1 chugging along . . ." 
 
 echo "TESTING FOR BLOCK SIZE $1" > ./results/$1.txt
 echo "" >> ./results/$1.txt
