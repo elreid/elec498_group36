@@ -123,10 +123,6 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 
 	//***
 	// @brief Creating streams for each node
-
-	heterogeneous_workload *workload = (heterogeneous_workload *) void_arg;
-	workload->checksum = check_sum;
-
 	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaError_t response;
@@ -139,8 +135,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("Stream %d created\n", i);
 		}
 		
-		workload->id = i;
-		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
+		response = cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
