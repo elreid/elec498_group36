@@ -7,3 +7,7 @@ populate_list time:             3.00
 populateArray time:             2.00
 
 250
+populate_list time:             13.00
+populateArray time:             3.00
+
+500
