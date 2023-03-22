@@ -126,12 +126,16 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		if(response != cudaSuccess){
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+		}else{
+			printf("Stream %d created\n", i);
 		}
 		
 		response = cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
+		}else{
+			printf("Callback function attached to stream %d\n", i);
 		}
 
 		printf("\n");
@@ -166,11 +170,11 @@ void launch_bogus()
 	cudaStream_t stream1, stream2, stream3;
 	cudaError_t response;
 	response = cudaStreamCreate(&stream1); 
-	printf("CUDA error: %s\n, %d", cudaGetErrorString(response), response);
+	printf("CUDA error: %s, %d\n", cudaGetErrorString(response), response);
 	response = cudaStreamCreate(&stream2); 
-	printf("CUDA error: %s\n, %d", cudaGetErrorString(response), response);
+	printf("CUDA error: %s, %d\n", cudaGetErrorString(response), response);
 	response = cudaStreamCreate(&stream3);
-	printf("CUDA error: %s\n, %d", cudaGetErrorString(response), response);
+	printf("CUDA error: %s, %d\n", cudaGetErrorString(response), response);
 	
 	for(int i=0;i<100;i++){
 		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream1>>>();
@@ -274,17 +278,17 @@ extern "C" void launch_matrix_multiply()
 }
 
 
-int main(int argc, char **argv)
-{
-	// launch_matrix_multiply();
-	size_t size_list_arr = (NUMNODES*3)*sizeof(int);
+// int main(int argc, char **argv)
+// {
+// 	// launch_matrix_multiply();
+// 	size_t size_list_arr = (NUMNODES*3)*sizeof(int);
 
-	int *d_list_arr;
-    cudaMalloc( (void**) &d_list_arr , size_list_arr );
+// 	int *d_list_arr;
+//     cudaMalloc( (void**) &d_list_arr , size_list_arr );
 
-	// launch_master(d_list_arr, CHECKSUM, NUMNODES);
+// 	// launch_master(d_list_arr, CHECKSUM, NUMNODES);
 
-	launch_bogus();
+// 	launch_bogus();
 
-	return 0;
-}
+// 	return 0;
+// }
