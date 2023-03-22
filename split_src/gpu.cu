@@ -98,12 +98,13 @@ __global__ void print_kernel()
 	}
 }
 
-void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
+void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
+	
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("Workload ID: %d @ Stream Addr: [%08X]\n", workload->id, &event);
+	printf("Workload ID: %d @ Stream Addr: [%08X]\n", workload->id, event);
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++){
@@ -116,7 +117,7 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 /**
  * @brief Launching the master kernel with the params. from cpu.c
  */
-extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
+extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 {
 	srand((unsigned)time(&t));
 	start_test = clock();
@@ -125,11 +126,17 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	/***
+	 * Checking if the d_arr is passed over correctly 
+	*/
+	printf("[LAUNCH_MASTER]: Printing the data_arr\n");
+	printArray(data_arr, 3 * num_nodes);
+	printf("\n");
+
+
+	/***
 	 * @brief Creating streams for each node
 	 * Undefined number of streams
 	 */
-
-
 	cudaStream_t streams[num_nodes];
 
 
@@ -147,10 +154,8 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		}else{
 			printf("Stream %d created @ [%08X]\n", i, &streams[i]);
 		}
-
-		printf("\n");
-
 	}
+	printf("\n\n");
 
 
 
@@ -210,7 +215,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		workload->check_sum = check_sum;
 		workload->numnodes = num_nodes;
 		workload->id = i;
-		
+
 		response = cudaStreamAddCallback(streams[i], myStreamCallback, workload, 0);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
@@ -222,10 +227,10 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		 * End of cb_
 		 * 
 		 */
-
 	}
+	printf("\n\n");
 
-	// cudaDeviceSynchronize();
+	cudaDeviceSynchronize();
 
 	//***
 	// @brief Destroying the streams
