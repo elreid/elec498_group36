@@ -1,0 +1,107 @@
+TESTING FOR BLOCK SIZE 256
+\n
+[ERROR]: Stream creation failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+\n
+[ERROR]: Stream creation failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+\n
+[ERROR]: Stream creation failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+\n
+[ERROR]: Stream creation failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+\n
+[ERROR]: Stream creation failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 0
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 1
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 2
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 3
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Stream creation failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+[ERROR]: Attaching callback function failed for stream 4
+	- CUDA error: no CUDA-capable device is detected
+\n
