@@ -120,7 +120,6 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	for (int i = 0; i < num_nodes; i++)
 	{
 		cudaError_t response;
-		printf("%d\n", response);
 
 		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
