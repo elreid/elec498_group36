@@ -105,11 +105,11 @@ __global__ void print_kernel()
 
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	printf("============================================\n");
+	// printf("============================================\n");
 	
 	struct workload *workload = (struct workload *)data;
 
-	printf("Workload ID: [%d],  Event: [%08X]\n", workload->id, event);
+	// printf("Workload ID: [%d],  Event: [%08X] : ", workload->id, event);
 	if (status != cudaSuccess)
 		printf("ERR: %s\n", cudaGetErrorString(status));
 	
@@ -119,14 +119,14 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 	workload->data_arr[workload->id * 3] = 0xACCED000 | workload->id;
 
 
-	printf("Checksum: ");
-	for (int i = 0; i < workload->numnodes; i++)
-	{
-		printf("%d ", workload->check_sum[i]);
-	}
-	printf(", Time Finished: %0.2f\n", (double)(clock() - start_test));
-	printf("============================================\n");
-	printf("\n\n");
+	// printf("Checksum: ");
+	// for (int i = 0; i < workload->numnodes; i++)
+	// {
+	// 	printf("%d ", workload->check_sum[i]);
+	// }
+	printf("ID: %d, Time Finished: %0.2f\n", workload->id, (double)(clock() - start_test));
+	// printf("============================================\n");
+	// printf("\n\n");
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
@@ -142,9 +142,9 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 	/***
 	 * Checking if the d_arr is passed over correctly
 	 */
-	printf("[LAUNCH_MASTER]: Printing the data_arr\n");
-	printArray(data_arr, 3 * num_nodes);
-	printf("\n");
+	// printf("[LAUNCH_MASTER]: Printing the data_arr\n");
+	// printArray(data_arr, 3 * num_nodes);
+	// printf("\n");
 
 	/***
 	 * @brief Creating streams for each node
