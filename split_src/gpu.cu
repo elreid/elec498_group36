@@ -158,13 +158,19 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	printf("Finished launching master function\n");
 }
 
-extern "C" void launch_bogus()
+void launch_bogus()
 {
 	dim3 threadsPerBlock(TPB, TPB);
 	dim3 numberOfBlocks(ceil(D / threadsPerBlock.x), ceil(D / threadsPerBlock.y));
 
 	cudaStream_t stream1, stream2, stream3;
-	cudaStreamCreate(&stream1); cudaStreamCreate(&stream2); cudaStreamCreate(&stream3);
+	cudaError_t response;
+	response = cudaStreamCreate(&stream1); 
+	printf("CUDA error: %s\n", cudaGetErrorString(response));
+	response = cudaStreamCreate(&stream2); 
+	printf("CUDA error: %s\n", cudaGetErrorString(response));
+	response = cudaStreamCreate(&stream3);
+	printf("CUDA error: %s\n", cudaGetErrorString(response));
 	
 	for(int i=0;i<100;i++){
 		print_kernel<<<numberOfBlocks,threadsPerBlock,0,stream1>>>();
