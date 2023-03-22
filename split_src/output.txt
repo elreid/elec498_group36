@@ -1,0 +1,5 @@
+Hello World from process 0 of 1
+3
+host addition time: 0.00
+
+ normal matrix addition: 0.00
