@@ -144,7 +144,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		}
 		
 		workloadObject->id = i;
-		response = cudaStreamAddCallback(streams[i], myStreamCallback, workloadObject, 0);
+		response = cudaStreamAddCallback(streams[i], myStreamCallback, check_sum, 0);
 		if(response != cudaSuccess){
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
