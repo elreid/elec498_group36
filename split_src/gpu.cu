@@ -16,8 +16,12 @@
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
 
+// #define NUMNODES 5
+
 // GLOBAL CHECKSUM VARIABLE
 // int  CHECKSUM[NUMNODES] = {0};
+
+
 struct workload
 {
 	int *data_arr;
@@ -234,9 +238,10 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		 * @brief kernel inst.
 		 *
 		 * INSTANTIATE THE KERNEL
+		 * - sads 
 		 *
 		 */
-		matrixAddition<<<1, 1, 1, streams[i]>>>(d_A, d_B, d_C, D);
+		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 	}
 	printf("\n\n");
@@ -302,10 +307,10 @@ extern "C" void launch_matrix_multiply()
 	size_t size = D * D * sizeof(int);
 
 	// create pointers for host related stuff, allocate the memory required
-	int *h_A = (int *)malloc(size);
-	int *h_B = (int *)malloc(size);
-	int *h_C = (int *)malloc(size);
-	int *h_C1 = (int *)malloc(size);
+	int *h_A 	= (int *)malloc(size);
+	int *h_B 	= (int *)malloc(size);
+	int *h_C 	= (int *)malloc(size);
+	int *h_C1 	= (int *)malloc(size);
 
 	// create pointers for device related stuff, allocate the memory required
 	int *d_A, *d_B, *d_C;
@@ -382,9 +387,9 @@ extern "C" void launch_matrix_multiply()
 // 	int *d_list_arr;
 //     cudaMalloc( (void**) &d_list_arr , size_list_arr );
 
-// 	// launch_master(d_list_arr, CHECKSUM, NUMNODES);
+// 	launch_master(d_list_arr, CHECKSUM, NUMNODES);
 
-// 	launch_bogus();
+// 	// launch_bogus();
 
 // 	return 0;
 // }

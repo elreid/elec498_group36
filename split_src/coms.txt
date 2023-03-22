@@ -21,6 +21,7 @@ exit
 module load openmpi cuda
 mpicc -c cpu.c -o cpu.o
 
+nvcc -c gpu.cu -o gpu.o
 nvcc -G -c gpu.cu -o gpu.o
 nvcc -O0 -c gpu.cu -o gpu.o
 nvcc -O1 -c gpu.cu -o gpu.o
