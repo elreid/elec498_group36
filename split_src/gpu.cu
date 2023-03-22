@@ -100,7 +100,8 @@ __global__ void print_kernel()
 
 void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-	
+	printf("============================================\n");
+	if (status != cudaSuccess) printf("ERR: %s\n", cudaGetErrorString(status));
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
@@ -111,6 +112,7 @@ void CUDART_CB myStreamCallback(cudaStream_t event, cudaError_t status, void *da
 		printf("%d ", workload->check_sum[i]);
 	}
 	printf(", Time Finished: %0.2f", (double)(clock() - start_test));
+	printf("============================================\n");
 	printf("\n\n");
 
 }
