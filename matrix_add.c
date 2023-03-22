@@ -16,7 +16,7 @@ int main(){
     size_t size = D*D*sizeof(int);
 
     int *h_A = (int*)malloc(size);
-    int *h_B = (int*)malloc(size);
+    int *h_B = (int*)malloc(size);git 
     int *h_C = (int*)malloc(size);
 
     int *d_A, *d_B, *d_C;
