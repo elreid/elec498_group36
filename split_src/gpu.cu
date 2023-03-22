@@ -241,7 +241,14 @@ extern "C" void launch_master(int *data_arr, int *check_sum, int num_nodes)
 		 * - sads 
 		 *
 		 */
+		double cpu_time_used;
+		start_test = clock();
+
 		matrixAddition<<<1, 1, 0, streams[i]>>>(d_A, d_B, d_C, D);
+		
+		end_test = clock();
+		cpu_time_used = ((double)(end_test - start_test));
+		printf("i = %d, mat add time :\t\t%0.2f\n", i, cpu_time_used);
 		// print_kernel<<<1, 1, 0, streams[i]>>>();
 	}
 	// printf("\n\n");
