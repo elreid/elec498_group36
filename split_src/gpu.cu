@@ -103,7 +103,7 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("=== Workload ID: %d ===\n", workload->id);
+	printf("Workload ID: %d @ Stream Addr: [%08X]\n", workload->id, &event);
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++){
@@ -145,12 +145,15 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("[ERROR]: Stream creation failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}else{
-			printf("Stream %d created\n", i);
+			printf("Stream %d created @ [%08X]\n", i, &streams[i]);
 		}
 
 		printf("\n");
 
 	}
+
+
+
 	//***
 	// @brief Wiring up the kernels to their specific streams
 	for (int i = 0; i < num_nodes; i++)
@@ -211,7 +214,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 			printf("[ERROR]: Attaching callback function failed for stream %d\n", i);
 			printf("\t- CUDA error: %s\n", cudaGetErrorString(response));
 		}else{
-			printf("Callback function attached to stream %d\n", i);
+			printf("Callback function attached to stream %d @ [%08X]\n", i, &streams[i]);
 		}
 		/**
 		 * End of cb_
