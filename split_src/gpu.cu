@@ -95,7 +95,7 @@ __global__ void print_kernel()
 	}
 }
 
-void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
+void myStreamCallback(cudaStream_t event, cudaError_t status, void *data, int i)
 {
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
