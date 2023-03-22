@@ -66,6 +66,10 @@ int LengthLinkedList(struct node *head)
 
 struct node *populate_list()
 {
+    clock_t start_test, end_test;
+	double cpu_time_used;
+	start_test = clock();
+
     struct node *head = NULL;
     struct node *prev = NULL;
 
@@ -92,6 +96,11 @@ struct node *populate_list()
             prev->next = NULL;
         }
     }
+
+    end_test = clock();
+	cpu_time_used = ((double)(end_test - start_test));
+	printf("populate_list time:\t\t%0.2f\n", cpu_time_used);
+
     return head;
 }
 
@@ -113,6 +122,10 @@ void printList(struct node *head)
 
 void populateArray(struct node *head, int **arr)
 {
+    clock_t start_test, end_test;
+	double cpu_time_used;
+	start_test = clock();
+
     struct node *current = head; 
 
     free(*arr);
@@ -133,6 +146,10 @@ void populateArray(struct node *head, int **arr)
             current         = current->next;
         }
     }
+
+    end_test = clock();
+	cpu_time_used = ((double)(end_test - start_test));
+	printf("populateArray time:\t\t%0.2f\n", cpu_time_used);
 }
 
 
