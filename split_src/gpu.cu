@@ -173,6 +173,8 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	for (int i = 0; i < num_nodes; i++)
 	{
 
+		size_t size = D * D * sizeof(int);
+
 		// create pointers for host related stuff, allocate the memory required
 		int *h_A = (int *)malloc(size);
 		int *h_B = (int *)malloc(size);
@@ -186,14 +188,14 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 		cudaMalloc((void **)&d_C, size);
 
 		// send in values into the host 2 input matrices, randomness in the arrays
-		for (int i = 0; i < D; i++)
+		for (int x = 0; x < D; x++)
 		{
-			for (int j = 0; j < D; j++)
+			for (int y = 0; y < D; y++)
 			{
 				int rand1 = rand() % 10;
 				int rand2 = rand() % 10;
-				*(h_A + i * D + j) = rand1;
-				*(h_B + i * D + j) = rand2;
+				*(h_A + x * D + y) = rand1;
+				*(h_B + x * D + y) = rand2;
 			}
 		}
 
