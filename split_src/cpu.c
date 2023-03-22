@@ -212,7 +212,7 @@ int main(int argc, char **argv)
 
     launch_master(d_list_arr, CHECKSUM, NUMNODES);
 
-    // printArray(CHECKSUM, NUMNODES);
+    printArray(CHECKSUM, NUMNODES);
 
     // launch_matrix_multiply();
 

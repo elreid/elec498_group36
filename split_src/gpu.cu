@@ -102,8 +102,6 @@ __global__ void print_kernel()
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
 
-
-
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
@@ -174,7 +172,45 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 	// @brief Wiring up the kernels to their specific streams
 	for (int i = 0; i < num_nodes; i++)
 	{
-		print_kernel<<<1, 1, 0, streams[i]>>>();
+
+		// create pointers for host related stuff, allocate the memory required
+		int *h_A = (int *)malloc(size);
+		int *h_B = (int *)malloc(size);
+		int *h_C = (int *)malloc(size);
+		int *h_C1 = (int *)malloc(size);
+
+		// create pointers for device related stuff, allocate the memory required
+		int *d_A, *d_B, *d_C;
+		cudaMalloc((void **)&d_A, size);
+		cudaMalloc((void **)&d_B, size);
+		cudaMalloc((void **)&d_C, size);
+
+		// send in values into the host 2 input matrices, randomness in the arrays
+		for (int i = 0; i < D; i++)
+		{
+			for (int j = 0; j < D; j++)
+			{
+				int rand1 = rand() % 10;
+				int rand2 = rand() % 10;
+				*(h_A + i * D + j) = rand1;
+				*(h_B + i * D + j) = rand2;
+			}
+		}
+
+		// copy contents of host input matrices to the device
+		cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+		cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+
+
+		/**
+		 * @brief kernel inst.
+		 * 
+		 * INSTANTIATE THE KERNEL
+		 * 
+		 */
+		matrixAddition<<<numberOfBlocks, threadsPerBlock, 0, streams[i]>>>(d_A, d_B, d_C, D);
+		// print_kernel<<<1, 1, 0, streams[i]>>>();
+
 	}
 	cudaDeviceSynchronize();
 
