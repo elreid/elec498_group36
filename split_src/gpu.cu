@@ -15,7 +15,6 @@
 #define N 16
 #define USECPSEC 1000000ULL
 #define NUMPARTITIONS 4
-#define NUMNODES 5
 
 
 // GLOBAL CHECKSUM VARIABLE
@@ -24,6 +23,7 @@ struct workload
 {
 	int * check_sum;
     int id;
+	int numnodes;
 };
 
 // GLOBAL FLAG VARIABLE 
@@ -104,10 +104,10 @@ void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("[ Workload ID: %d ] ", workload->id);
+	printf("[ Workload ID: %d ] \n", workload->id);
 
 	printf("Checksum: ");
-	for (int i = 0; i < NUMNODES; i++){
+	for (int i = 0; i < workload->numnodes; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
 	printf(", Time Finished: %0.2f", (double)clock());
@@ -143,6 +143,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 
 		workload * workload = (struct workload *) malloc(sizeof(struct workload));
 		workload->check_sum = check_sum;
+		workload->numnodes = num_nodes;
 
 		response = cudaStreamCreate(&streams[i]);
 		if(response != cudaSuccess){
