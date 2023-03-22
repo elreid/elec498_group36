@@ -158,7 +158,7 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 
 	printf("Checksum: ");
 	for (int i = 0; i < num_nodes; i++){
-		printf("%d ", check_sum[i]);")
+		printf("%d ", check_sum[i]);
 	}
 	printf("\n");
 
