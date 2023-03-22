@@ -69,12 +69,10 @@ struct node *populate_list()
     struct node *head = NULL;
     struct node *prev = NULL;
 
-    int allocator = 0;
-
     for (int i = 0; i < NUMNODES; i += 1)
     {
         struct node *curr = (struct node *)malloc(sizeof(struct node));
-        curr->buffer = &allocator + i;
+        curr->buffer = 0x00000000 + i;
         curr->size = 256;
         curr->partitions = 16;
         curr->next = NULL;
@@ -128,8 +126,8 @@ void populateArray(struct node *head, int **arr)
     {
         for (int i = 0; i < NUMNODES * 3; i += 3)
         {
-            // (*arr)[i]    = (int)(current->buffer);
-            (*arr)[i]       = i; // TODO: Remove and change back
+            (*arr)[i]    = (int)(current->buffer);
+            // (*arr)[i]       = i; // TODO: Remove and change back
             (*arr)[i + 1]   = current->size;
             (*arr)[i + 2]   = current->partitions;
             current         = current->next;
