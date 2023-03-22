@@ -100,19 +100,20 @@ __global__ void print_kernel()
 
 void myStreamCallback(cudaStream_t event, cudaError_t status, void *data)
 {
-
+	printf("-\n");
 	struct workload * workload = (struct workload *) data;
 	workload->check_sum[workload->id] = 1;
 
-	printf("[ Workload ID: %d ] \n", workload->id);
+	printf("=== Workload ID: %d ===\n", workload->id);
 
 	printf("Checksum: ");
 	for (int i = 0; i < workload->numnodes; i++){
 		printf("%d ", workload->check_sum[i]);
 	}
 	printf(", Time Finished: %0.2f", (double)clock());
+	printf("-\n");
 
-	printf("\n");
+	printf("\n\n");
 }
 /**
  * @brief Launching the master kernel with the params. from cpu.c
@@ -168,40 +169,40 @@ extern "C" void launch_master(int *d_arr, int *check_sum, int num_nodes)
 
 	}
 
+	size_t size = D * D * sizeof(int);
+
+	// create pointers for host related stuff, allocate the memory required
+	int *h_A = (int *)malloc(size);
+	int *h_B = (int *)malloc(size);
+	int *h_C = (int *)malloc(size);
+	int *h_C1 = (int *)malloc(size);
+
+	// create pointers for device related stuff, allocate the memory required
+	int *d_A, *d_B, *d_C;
+	cudaMalloc((void **)&d_A, size);
+	cudaMalloc((void **)&d_B, size);
+	cudaMalloc((void **)&d_C, size);
+
+	// send in values into the host 2 input matrices, randomness in the arrays
+	for (int x = 0; x < D; x++)
+	{
+		for (int y = 0; y < D; y++)
+		{
+			int rand1 = rand() % 10;
+			int rand2 = rand() % 10;
+			*(h_A + x * D + y) = rand1;
+			*(h_B + x * D + y) = rand2;
+		}
+	}
 	//***
 	// @brief Wiring up the kernels to their specific streams
 	for (int i = 0; i < num_nodes; i++)
 	{
 
-		size_t size = D * D * sizeof(int);
-
-		// create pointers for host related stuff, allocate the memory required
-		int *h_A = (int *)malloc(size);
-		int *h_B = (int *)malloc(size);
-		int *h_C = (int *)malloc(size);
-		int *h_C1 = (int *)malloc(size);
-
-		// create pointers for device related stuff, allocate the memory required
-		int *d_A, *d_B, *d_C;
-		cudaMalloc((void **)&d_A, size);
-		cudaMalloc((void **)&d_B, size);
-		cudaMalloc((void **)&d_C, size);
-
-		// send in values into the host 2 input matrices, randomness in the arrays
-		for (int x = 0; x < D; x++)
-		{
-			for (int y = 0; y < D; y++)
-			{
-				int rand1 = rand() % 10;
-				int rand2 = rand() % 10;
-				*(h_A + x * D + y) = rand1;
-				*(h_B + x * D + y) = rand2;
-			}
-		}
 
 		// copy contents of host input matrices to the device
-		cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
-		cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+		cudaMemcpyAsync(d_A, h_A, size, cudaMemcpyHostToDevice, stream[i]);
+		cudaMemcpyAsync(d_B, h_B, size, cudaMemcpyHostToDevice, stream[i]);
 
 
 		/**
