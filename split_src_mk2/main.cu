@@ -187,8 +187,8 @@ int main(int argc, char **argv)
 
     int *h_list_arr = (int *)malloc(size_list_arr);
 
-    populate_array(head, &h_list_arr);
-    print_array(h_list_arr, NUMNODES * 3); // TODO: Remove this line
+    // populate_array(head, &h_list_arr);
+    // print_array(h_list_arr, NUMNODES * 3); // TODO: Remove this line
 
     return 0;
 }
